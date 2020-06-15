@@ -1,26 +1,29 @@
+// https://auth0.com/docs/quickstart/spa/react
+// https://www.apollographql.com/docs/react/get-started/
+// https://www.apollographql.com/docs/react/networking/authentication/
+
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {Route, Switch} from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Profile from "./components/Profile";
+import PrivateRoute from "./components/PrivateRoute";
+import MyVoyager from "./components/MyVoyager";
+import MyMapbox from "./components/MyMapbox";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <div>
+            <Navbar/>
+            <Switch>
+                <Route path="/" exact/>
+                <PrivateRoute path="/profile" component={Profile}/>
+                <PrivateRoute path="/mapbox" component={MyMapbox}/>
+                <PrivateRoute path="/voyager" component={MyVoyager}/>
+                {/*<PrivateRoute path="/graphiql" component={MyGraphiql}/>*/}
+            </Switch>
+        </div>
+    );
 }
 
 export default App;

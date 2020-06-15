@@ -1,0 +1,88 @@
+name: Master Branch
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - v*
+      -
+
+env:
+  IMAGE_NAME: eks-express-react
+
+jobs:
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run tests
+        run: |
+          if [ -f docker-compose.test.yml ]; then
+            docker-compose --file docker-compose.test.yml build
+            docker-compose --file docker-compose.test.yml run sut
+          else
+            docker build . --file Dockerfile
+          fi
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: build
+        run: docker build . --file Dockerfile --tag image --build-arg REACT_APP_MAPBOXAPIACCESSTOKEN=${{ secrets.REACT_APP_MAPBOXAPIACCESSTOKEN }} --build-arg REACT_APP_GRAPHQL_ENDPOINT=${{ secrets.REACT_APP_GRAPHQL_ENDPOINT }}
+
+      - name: login
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+
+      - name: push
+        run: |
+          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
+
+          # Change all uppercase to lowercase
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+
+          # Strip git ref prefix from version
+          # VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+
+          # TODO: toggle off of 'latest' tag after initial deployment
+          VERSION=$(git rev-parse --short "$GITHUB_SHA")
+          # VERSION=latest
+
+          # Strip "v" prefix from tag name
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+
+          # Use Docker `latest` tag convention
+          [ "$VERSION" == "master" ] && VERSION=latest
+
+          # Print image description
+          echo IMAGE_ID=$IMAGE_ID
+          echo VERSION=$VERSION
+
+          # Tag the image and push to the repository
+          docker tag image $IMAGE_ID:$VERSION
+          docker push $IMAGE_ID:$VERSION
+
+          # Set environment variables
+          # https://help.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-environment-variable
+          echo "::set-env name=IMAGE_ID::$IMAGE_ID"
+          echo "::set-env name=VERSION::$VERSION"
+
+      # https://github.com/marketplace/actions/eks-action
+      - name: Deploy
+        uses: cancue/eks-action@v0.0.2
+        env:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_region: us-east-1
+          cluster_name: default
+          K8S_NAMESPACE: react
+          K8S_DEPLOYMENT: react
+        with:
+          args: |
+            kubectl set image deployment $K8S_DEPLOYMENT -n $K8S_NAMESPACE $K8S_DEPLOYMENT=$IMAGE_ID:$VERSION &&
+            kubectl rollout status deployment/$K8S_DEPLOYMENT -n $K8S_NAMESPACE

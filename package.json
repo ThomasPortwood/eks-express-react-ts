@@ -3,17 +3,36 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@apollo/react-hooks": "^3.1.5",
+    "@auth0/auth0-spa-js": "^1.9.0",
+    "@material-ui/core": "^4.9.14",
+    "@material-ui/icons": "^4.9.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "@types/isomorphic-fetch": "^0.0.35",
     "@types/jest": "^24.0.0",
     "@types/node": "^12.0.0",
-    "@types/react": "^16.9.0",
+    "@types/react": "^16.9.36",
     "@types/react-dom": "^16.9.0",
+    "@types/react-map-gl": "^5.2.4",
+    "@types/react-router-dom": "^5.1.5",
+    "apollo-cache-inmemory": "^1.6.6",
+    "apollo-client": "^2.6.10",
+    "apollo-link-context": "^1.0.20",
+    "apollo-link-http": "^1.5.17",
+    "dotenv": "^8.2.0",
+    "graphiql": "^0.17.5",
+    "graphiql-explorer": "^0.6.2",
+    "graphql": "14.3.0",
+    "graphql-voyager": "^1.0.0-rc.30",
+    "isomorphic-fetch": "^2.2.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-map-gl": "^5.2.5",
+    "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
-    "typescript": "~3.7.2"
+    "typescript": "^3.9.5"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -35,5 +54,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@auth0/auth0-spa-js": "^1.9.0"
   }
 }
