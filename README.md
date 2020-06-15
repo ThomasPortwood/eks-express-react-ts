@@ -1,44 +1,33 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# eks-express-react
+This repository is for my own educational purposes. 
 
-## Available Scripts
+It contains Terraform infrastructure definition, Docker image definition, GitHub action definition, and configuration to serve a [React](https://reactjs.org/) app with [Node Express](https://expressjs.com/) on [AWS Elastic Kubernetes Service](https://aws.amazon.com/eks/). 
 
-In the project directory, you can run:
+[Terraform Cloud](https://www.terraform.io/) manages infrastructure state.
 
-### `yarn start`
+[GitHub Actions](https://github.com/features/actions) builds the Docker image, and [GitHub Packages](https://github.com/features/packages) stores it.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Steps:
+1. Get set up on [AWS Elastic Kubernetes Service](https://aws.amazon.com/eks/)
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+2. [Set up authorization to access your Docker registry from Kubernetes](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/)
+    - kubectl create secret docker-registry regcred --namespace=<your-namespace> --docker-server=<your-registry-server> --docker-username=<github-username> --docker-password=<github-token>
+    
+3. Create version control repository
 
-### `yarn test`
+4. Get set up on [Terraform Cloud](https://www.terraform.io/):
+   - create account
+   - create workspace
+   - link the workspace to version control system repository
+   - define variables
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+5. Push code to the version control repository to trigger a Terraform run which will:
+    - create Kubernetes resources
+        - namespace
+        - node deployment and service
+        - ingress
+            
+- TODO
+    - kubernetes secret for github package access in terraform
+    - ssl cert via terraform
+    - route53 records via terraform https://www.terraform.io/docs/providers/aws/r/route53_record.html
