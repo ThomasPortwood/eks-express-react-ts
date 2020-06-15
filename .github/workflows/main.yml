@@ -35,8 +35,8 @@ jobs:
 
       - name: build
         run: docker build . --file Dockerfile --tag image |
-        --build-arg REACT_APP_MAPBOXAPIACCESSTOKEN=${{ secrets.REACT_APP_MAPBOXAPIACCESSTOKEN }} |
-        --build-arg REACT_APP_GRAPHQL_ENDPOINT=${{ secrets.REACT_APP_GRAPHQL_ENDPOINT }}
+          --build-arg REACT_APP_MAPBOXAPIACCESSTOKEN=${{ secrets.REACT_APP_MAPBOXAPIACCESSTOKEN }} |
+          --build-arg REACT_APP_GRAPHQL_ENDPOINT=${{ secrets.REACT_APP_GRAPHQL_ENDPOINT }}
 
       - name: login
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
