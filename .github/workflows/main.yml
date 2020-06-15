@@ -9,7 +9,7 @@ on:
       -
 
 env:
-  IMAGE_NAME: eks-express-react
+  IMAGE_NAME: eks-express-react-ts
 
 jobs:
 
@@ -17,14 +17,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Run tests
-        run: |
-          if [ -f docker-compose.test.yml ]; then
-            docker-compose --file docker-compose.test.yml build
-            docker-compose --file docker-compose.test.yml run sut
-          else
-            docker build . --file Dockerfile
-          fi
+      - uses: actions/setup-node@v2-beta
+        with:
+          node-version: '14'
+        run: yarn install
 
   deploy:
     needs: test
