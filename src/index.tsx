@@ -1,9 +1,12 @@
+// https://www.apollographql.com/docs/react/get-started/
+// https://www.apollographql.com/docs/react/networking/authentication/
+// https://auth0.com/blog/modern-full-stack-development-with-nestjs-react-typescript-and-mongodb-part-2
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import {Auth0Provider, useAuth0} from './contexts/auth0-context';
-import {BrowserRouter} from 'react-router-dom';
 import * as serviceWorker from "./serviceWorker";
 
 import {ApolloProvider} from '@apollo/react-hooks';
@@ -16,7 +19,6 @@ const httpLink = createHttpLink({
     uri: process.env.REACT_APP_GRAPHQL_ENDPOINT
 });
 
-// https://www.apollographql.com/docs/react/networking/authentication/
 const authLink = setContext((_, {headers}) => {
     const {getTokenSilently} = useAuth0();
     const token = getTokenSilently();
@@ -37,9 +39,7 @@ const client = new ApolloClient({
 ReactDOM.render(
     <Auth0Provider>
         <ApolloProvider client={client}>
-            <BrowserRouter>
-                <App/>
-            </BrowserRouter>
+            <App/>
         </ApolloProvider>
     </Auth0Provider>,
     document.getElementById('root')

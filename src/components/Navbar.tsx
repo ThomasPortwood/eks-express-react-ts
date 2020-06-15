@@ -1,7 +1,7 @@
 // src/components/Navbar.js
 
 import React from "react";
-import {Link, withRouter} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {useAuth0} from '../contexts/auth0-context';
 import {makeStyles} from '@material-ui/core/styles';
 import {AppBar, Button, IconButton, Menu, MenuItem, Toolbar, Typography} from "@material-ui/core";
@@ -68,4 +68,4 @@ function Navbar() {
     );
 }
 
-export default withRouter(Navbar);
+export default Navbar;
