@@ -24,6 +24,8 @@ jobs:
           node-version: '14'
       - name: Install Packages
         run: yarn install
+      - name: Run Tests
+        run: yarn test
 
   deploy:
     needs: test
