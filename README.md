@@ -1,7 +1,7 @@
-# eks-express-react
+# eks-express-react-ts
 This repository is for my own educational purposes. 
 
-It contains Terraform infrastructure definition, Docker image definition, GitHub action definition, and configuration to serve a [React](https://reactjs.org/) app with [Node Express](https://expressjs.com/) on [AWS Elastic Kubernetes Service](https://aws.amazon.com/eks/). 
+It contains Terraform infrastructure definition, Docker image definition, GitHub action definition, and configuration to serve a typescript [React](https://reactjs.org/) app with [Node Express](https://expressjs.com/) on [AWS Elastic Kubernetes Service](https://aws.amazon.com/eks/). 
 
 [Terraform Cloud](https://www.terraform.io/) manages infrastructure state.
 
