@@ -42,8 +42,7 @@ export const FixtureList = (props: any) => (
     <List filters={<FixtureFilter/>} {...props}>
         <Datagrid>
             <TextField source="id"/>
-            <TextField source="property" />
-            {/*<ReferenceField source="propertyId" reference="Property"><TextField source="name"/></ReferenceField>*/}
+            <ReferenceField label="Property" source="property.id" reference="Property"><TextField source="name"/></ReferenceField>
             <TextField source="name"/>
             <EditButton/>
         </Datagrid>
