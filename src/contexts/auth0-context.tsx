@@ -1,6 +1,5 @@
-// https://auth0.com/blog/modern-full-stack-development-with-nestjs-react-typescript-and-mongodb-part-2
-
 import React, {Component, createContext, useContext} from 'react';
+// https://auth0.com/blog/modern-full-stack-development-with-nestjs-react-typescript-and-mongodb-part-2
 import createAuth0Client from '@auth0/auth0-spa-js';
 import Auth0Client, {Auth0ClientOptions} from '@auth0/auth0-spa-js';
 
@@ -63,16 +62,16 @@ export class Auth0Provider extends Component<{}, IState> {
     };
 
     handleRedirectCallback = async () => {
-        this.setState({ isLoading: true });
+        this.setState({isLoading: true});
         await this.state.auth0Client.handleRedirectCallback();
         const user = await this.state.auth0Client.getUser();
-        this.setState({ user, isAuthenticated: true, isLoading: false });
+        this.setState({user, isAuthenticated: true, isLoading: false});
         window.history.replaceState({}, document.title, window.location.pathname);
     };
 
     render() {
-        const { auth0Client, isLoading, isAuthenticated, user } = this.state;
-        const { children } = this.props;
+        const {auth0Client, isLoading, isAuthenticated, user} = this.state;
+        const {children} = this.props;
         const configObject = {
             isLoading,
             isAuthenticated,

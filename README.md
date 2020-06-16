@@ -31,3 +31,4 @@ Steps:
     - kubernetes secret for github package access in terraform
     - ssl cert via terraform
     - route53 records via terraform https://www.terraform.io/docs/providers/aws/r/route53_record.html
+    - document usage of react-admin
