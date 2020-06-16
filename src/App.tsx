@@ -23,7 +23,7 @@ import buildGraphQLProvider from 'ra-data-graphql-simple';
 import {Admin, Resource} from 'react-admin';
 
 // mine
-import {PropertyCreate, PropertyList} from "./components/Properties";
+import {PropertyCreate, PropertyEdit, PropertyList} from "./components/Properties";
 import {FixtureCreate, FixtureEdit, FixtureList} from "./components/Fixtures";
 import Dashboard from "./components/Dashboard";
 
@@ -55,8 +55,6 @@ function App() {
 
     useEffect(() => {
 
-        console.log(isAuthenticated);
-
         if (!isAuthenticated) return;
 
         getTokenSilently().then((t: string) => {
@@ -87,7 +85,8 @@ function App() {
             {isAuthenticated && dataProvider && (
                 // <ApolloProvider client={client}>
                     <Admin dashboard={Dashboard} dataProvider={dataProvider}>
-                        <Resource name="Property" list={PropertyList} create={PropertyCreate}/>
+                        <Resource name="Property" list={PropertyList} create={PropertyCreate} edit={PropertyEdit}/>
+                        <Resource name="Fixture" list={FixtureList} create={FixtureCreate} edit={FixtureEdit}/>
                     </Admin>
                 // </ApolloProvider>
             )}
