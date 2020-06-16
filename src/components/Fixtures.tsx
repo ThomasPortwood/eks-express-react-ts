@@ -12,7 +12,7 @@ export const FixtureEdit = (props: any) => (
     <Edit title={<FixtureTitle/>} {...props}>
         <SimpleForm>
             <TextInput disabled source="id"/>
-            <ReferenceInput source="propertyId" reference="properties"><SelectInput optionText="name"/></ReferenceInput>
+            <ReferenceInput source="propertyId" reference="Property"><SelectInput optionText="name"/></ReferenceInput>
             <TextInput source="name"/>
             {/*<TextInput multiline source="properties"/>*/}
         </SimpleForm>
@@ -22,7 +22,7 @@ export const FixtureEdit = (props: any) => (
 export const FixtureCreate = (props: any) => (
     <Create {...props}>
         <SimpleForm>
-            <ReferenceInput source="propertyId" reference="properties"><SelectInput optionText="name"/></ReferenceInput>
+            <ReferenceInput source="propertyId" reference="Property"><SelectInput optionText="name"/></ReferenceInput>
             <TextInput source="name"/>
             {/*<TextInput multiline source="properties"/>*/}
         </SimpleForm>
@@ -32,7 +32,7 @@ export const FixtureCreate = (props: any) => (
 const FixtureFilter = (props: any) => (
     <Filter {...props}>
         <TextInput label="Search" source="q" alwaysOn/>
-        <ReferenceInput label="Property" source="propertyId" reference="properties" allowEmpty>
+        <ReferenceInput label="Property" source="id" reference="Property" allowEmpty>
             <SelectInput optionText="name"/>
         </ReferenceInput>
     </Filter>
@@ -42,7 +42,8 @@ export const FixtureList = (props: any) => (
     <List filters={<FixtureFilter/>} {...props}>
         <Datagrid>
             <TextField source="id"/>
-            <ReferenceField source="propertyId" reference="properties"><TextField source="name"/></ReferenceField>
+            <TextField source="property" />
+            {/*<ReferenceField source="propertyId" reference="Property"><TextField source="name"/></ReferenceField>*/}
             <TextField source="name"/>
             <EditButton/>
         </Datagrid>
