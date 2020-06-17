@@ -28,12 +28,12 @@ interface IState {
 export class Auth0Provider extends Component<{}, IState> {
 
     constructor(props: any) {
-        super(props)
+        super(props);
         this.state = {
             isLoading: true,
             isAuthenticated: false,
             user: null,
-            auth0Client: Auth0Client,
+            auth0Client: Auth0Client
         };
     }
 

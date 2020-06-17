@@ -12,9 +12,8 @@ export const FixtureEdit = (props: any) => (
     <Edit title={<FixtureTitle/>} {...props}>
         <SimpleForm>
             <TextInput disabled source="id"/>
-            <ReferenceInput source="propertyId" reference="Property"><SelectInput optionText="name"/></ReferenceInput>
             <TextInput source="name"/>
-            {/*<TextInput multiline source="properties"/>*/}
+            <ReferenceInput label="Property" source="property.id" reference="Property"><SelectInput optionText="name"/></ReferenceInput>
         </SimpleForm>
     </Edit>
 );
@@ -24,7 +23,6 @@ export const FixtureCreate = (props: any) => (
         <SimpleForm>
             <ReferenceInput source="propertyId" reference="Property"><SelectInput optionText="name"/></ReferenceInput>
             <TextInput source="name"/>
-            {/*<TextInput multiline source="properties"/>*/}
         </SimpleForm>
     </Create>
 );
@@ -44,6 +42,7 @@ export const FixtureList = (props: any) => (
             <TextField source="id"/>
             <ReferenceField label="Property" source="property.id" reference="Property"><TextField source="name"/></ReferenceField>
             <TextField source="name"/>
+            <TextField source="created"/>
             <EditButton/>
         </Datagrid>
     </List>

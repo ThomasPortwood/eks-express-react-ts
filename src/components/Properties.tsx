@@ -2,7 +2,7 @@ import React from 'react';
 // https://marmelab.com/react-admin/Tutorial.html
 // https://github.com/marmelab/react-admin/issues/4505
 // @ts-ignore
-import {Create, Datagrid, Edit, List, ReferenceInput, SelectInput, SimpleForm, TextField, TextInput} from 'react-admin';
+import {Create, Datagrid, Edit, List, SimpleForm, TextField, TextInput} from 'react-admin';
 
 const PropertyTitle = ({p}: any) => {
     return <span>Property {p ? `"${p.name}"` : ''}</span>;
@@ -14,6 +14,7 @@ export const PropertyList = (props: any) => (
             <TextField source="id"/>
             <TextField source="name"/>
             <TextField source="properties"/>
+            <TextField source="created"/>
         </Datagrid>
     </List>
 );
