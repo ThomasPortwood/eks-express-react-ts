@@ -20,6 +20,7 @@ import {PropertyCreate, PropertyEdit, PropertyList} from "./components/Propertie
 import {FixtureCreate, FixtureEdit, FixtureList} from "./components/Fixtures";
 import Dashboard from "./components/Dashboard";
 import {Button} from "@material-ui/core";
+import {VerificationCreate, VerificationEdit, VerificationList} from "./components/Verifications";
 
 const uri = process.env.REACT_APP_GRAPHQL_ENDPOINT;
 
@@ -91,6 +92,8 @@ function App() {
                         dataProvider={reactAdminDataProvider}
                     >
                         <Resource name="Property" list={PropertyList} create={PropertyCreate} edit={PropertyEdit}/>
+                        <Resource name="Verification" list={VerificationList} create={VerificationCreate}
+                                  edit={VerificationEdit}/>
                         <Resource name="Fixture" list={FixtureList} create={FixtureCreate} edit={FixtureEdit}/>
                     </Admin>
                 </ApolloProvider>
