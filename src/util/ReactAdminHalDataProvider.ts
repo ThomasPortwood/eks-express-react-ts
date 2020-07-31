@@ -4,7 +4,7 @@ import {fetchUtils} from 'react-admin';
 // @ts-ignore
 import {stringify} from 'query-string';
 
-const baseUrl = 'http://localhost:8080/rest';
+const baseUrl = `${process.env.REACT_APP_HAL_ENDPOINT}`
 
 export default async (token: string) => {
 
