@@ -5,20 +5,20 @@ import React from 'react';
 import {Create, Datagrid, Edit, EditButton, Filter, List, ReferenceField, ReferenceInput, SelectInput, SimpleForm, TextField, TextInput} from 'react-admin';
 
 
-const VerificationTitle = ({p}: any) => {
-  return <span>Verification {p ? `"${p.name}"` : ''}</span>;
+const VerificationTitle = ({record}: any) => {
+  return <span>Verification {record ? `"${record.name}"` : ''}</span>;
 };
 
 export const VerificationList = (props: any) => (
   <List filters={<VerificationFilter/>} {...props}>
     <Datagrid rowClick="edit">
-      <ReferenceField label="Property" source="property.id" reference="Property">
+      <ReferenceField label="Property" source="propertyId" reference="properties">
         <TextField source="name"/>
       </ReferenceField>
-      <TextField source="id"/>
       <TextField source="name"/>
       <TextField source="attributes"/>
       <TextField source="created"/>
+      <EditButton/>
     </Datagrid>
   </List>
 );
@@ -26,11 +26,11 @@ export const VerificationList = (props: any) => (
 export const VerificationCreate = (props: any) => (
   <Create {...props}>
     <SimpleForm>
-      <ReferenceInput label="Property" source="property.id" reference="Property">
+      <ReferenceInput label="Property" source="property.id" reference="properties">
         <SelectInput optionText="name"/>
       </ReferenceInput>
       <TextInput source="name"/>
-      <TextInput source="attributes"/>
+      <TextInput source="attributes" initialValue="{}"/>
     </SimpleForm>
   </Create>
 )
@@ -38,10 +38,9 @@ export const VerificationCreate = (props: any) => (
 export const VerificationEdit = (props: any) => (
   <Edit title={<VerificationTitle/>} {...props}>
     <SimpleForm>
-      <ReferenceInput label="Property" source="property.id" reference="Property">
+      <ReferenceInput label="Property" source="propertyId" reference="properties">
         <SelectInput optionText="name"/>
       </ReferenceInput>
-      <TextInput disabled source="id"/>
       <TextInput source="name"/>
       <TextInput source="attributes"/>
     </SimpleForm>

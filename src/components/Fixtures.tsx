@@ -5,16 +5,15 @@ import React from 'react';
 import {Create, Datagrid, Edit, EditButton, Filter, List, ReferenceField, ReferenceInput, SelectInput, SimpleForm, TextField, TextInput} from 'react-admin';
 
 const FixtureTitle = ({record}: any) => {
-  return <span>Fixture {record ? `"${record.title}"` : ''}</span>;
+  return <span>Fixture {record ? `"${record.name}"` : ''}</span>;
 };
 
 export const FixtureList = (props: any) => (
   <List filters={<FixtureFilter/>} {...props}>
-    <Datagrid>
-      <ReferenceField label="Property" source="property.id" reference="Property">
+    <Datagrid rowClick="edit">
+      <ReferenceField label="Property" source="propertyId" reference="properties">
         <TextField source="name"/>
       </ReferenceField>
-      <TextField source="id"/>
       <TextField source="name"/>
       <TextField source="created"/>
       <TextField source="attributes"/>
@@ -26,11 +25,11 @@ export const FixtureList = (props: any) => (
 export const FixtureCreate = (props: any) => (
   <Create {...props}>
     <SimpleForm>
-      <ReferenceInput label="Property" source="property.id" reference="Property">
+      <ReferenceInput label="Property" source="property.id" reference="properties">
         <SelectInput optionText="name"/>
       </ReferenceInput>
       <TextInput source="name"/>
-      <TextInput source="attributes"/>
+      <TextInput source="attributes" initialValue="{}"/>
     </SimpleForm>
   </Create>
 );
@@ -38,10 +37,9 @@ export const FixtureCreate = (props: any) => (
 export const FixtureEdit = (props: any) => (
   <Edit title={<FixtureTitle/>} {...props}>
     <SimpleForm>
-      <ReferenceInput label="Property" source="property.id" reference="Property">
+      <ReferenceInput label="Property" source="propertyId" reference="properties">
         <SelectInput optionText="name"/>
       </ReferenceInput>
-      <TextInput disabled source="id"/>
       <TextInput source="name"/>
       <TextInput source="attributes"/>
     </SimpleForm>
