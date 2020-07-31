@@ -2,13 +2,13 @@ import * as React from 'react';
 import {useEffect, useState} from 'react';
 import {Voyager} from 'graphql-voyager';
 import fetch from 'isomorphic-fetch';
-import {useAuth0} from '../contexts/auth0-context';
+import {useAuth0} from "../contexts/auth0-context";
 
 const endpoint = process.env.REACT_APP_GRAPHQL_ENDPOINT;
 
 export default function MyVoyager() {
 
-    const {getTokenSilently} = useAuth0();
+    const {getTokenSilently, isAuthenticated} = useAuth0();
 
     const [token, setToken] = useState("");
 
@@ -26,9 +26,11 @@ export default function MyVoyager() {
 
     useEffect(() => {
 
+        if (!isAuthenticated) return;
+
         getTokenSilently().then((t: string) => setToken(t));
 
-    }, [getTokenSilently]);
+    }, [getTokenSilently, isAuthenticated]);
 
     return (
         <div>
