@@ -10,13 +10,14 @@ import {ApolloProvider} from '@apollo/react-hooks';
 import {Admin, Resource} from 'react-admin';
 // mine
 import {buildApolloClient} from "../util/ApolloUtil";
-import {PropertyCreate, PropertyEdit, PropertyList} from "./Properties";
-import {FixtureCreate, FixtureEdit, FixtureList} from "./Fixtures";
-import Dashboard from "../components/Overview";
-import {VerificationCreate, VerificationEdit, VerificationList} from "./Verifications";
-import {MyLogoutButton} from "./MyLogoutButton";
-import {DocumentCreate, DocumentEdit, DocumentList} from "./Documents";
+import {PropertyCreate, PropertyEdit, PropertyList} from "./admin/Properties";
+import {FixtureCreate, FixtureEdit, FixtureList} from "./admin/Fixtures";
+import Dashboard from "./admin/Overview";
+import {MyLogoutButton} from "./admin/MyLogoutButton";
+import {DocumentCreate, DocumentEdit, DocumentList} from "./admin/Documents";
 import createReactAdminHalDataProvider from "../util/ReactAdminHalDataProvider";
+import {ItemCreate, ItemEdit, ItemList} from "./admin/Items";
+import {MemberList} from "./admin/Members";
 
 
 export const ReactAdminHal = () => {
@@ -84,9 +85,10 @@ export const ReactAdminHal = () => {
             dashboard={Dashboard}
             dataProvider={reactAdminDataProvider}
           >
+            <Resource name="members" list={MemberList}/>
             <Resource name="properties" list={PropertyList} create={PropertyCreate} edit={PropertyEdit}/>
-            <Resource name="verifications" list={VerificationList} create={VerificationCreate} edit={VerificationEdit}/>
             <Resource name="fixtures" list={FixtureList} create={FixtureCreate} edit={FixtureEdit}/>
+            <Resource name="items" list={ItemList} create={ItemCreate} edit={ItemEdit}/>
             <Resource name="documents" list={DocumentList} create={DocumentCreate} edit={DocumentEdit}/>
           </Admin>
         </ApolloProvider>

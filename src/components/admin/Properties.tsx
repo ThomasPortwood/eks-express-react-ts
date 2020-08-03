@@ -11,7 +11,7 @@ const PropertyTitle = ({record}: any) => {
 export const PropertyList = (props: any) => (
   <List filters={<PropertyFilter/>} {...props}>
     <Datagrid rowClick="edit">
-      <DateField source="created" showTime/>
+      <DateField source="createdAt" label="Created" showTime/>
       <TextField source="name"/>
       <TextField source="attributes"/>
       <EditButton/>

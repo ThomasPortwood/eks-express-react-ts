@@ -11,12 +11,12 @@ import {Admin, Resource} from 'react-admin';
 // mine
 import {buildApolloClient} from "../util/ApolloUtil";
 import {createReactAdminGraphqlDataProvider} from "../util/ReactAdminGraphqlDataProvider";
-import {PropertyCreate, PropertyEdit, PropertyList} from "./Properties";
-import {FixtureCreate, FixtureEdit, FixtureList} from "./Fixtures";
-import Dashboard from "../components/Overview";
-import {VerificationCreate, VerificationEdit, VerificationList} from "./Verifications";
-import {MyLogoutButton} from "./MyLogoutButton";
-import {DocumentCreate, DocumentEdit, DocumentList} from "./Documents";
+import {PropertyCreate, PropertyEdit, PropertyList} from "./admin/Properties";
+import {FixtureCreate, FixtureEdit, FixtureList} from "./admin/Fixtures";
+import Dashboard from "./admin/Overview";
+import {VerificationCreate, VerificationEdit, VerificationList} from "./admin/Verifications";
+import {MyLogoutButton} from "./admin/MyLogoutButton";
+import {DocumentCreate, DocumentEdit, DocumentList} from "./admin/Documents";
 
 
 export const ReactAdminGraphql = () => {

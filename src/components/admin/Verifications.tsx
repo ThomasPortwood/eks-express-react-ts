@@ -2,7 +2,7 @@ import React from 'react';
 // https://marmelab.com/react-admin/Tutorial.html
 // https://github.com/marmelab/react-admin/issues/4505
 // @ts-ignore
-import {Create, Datagrid, Edit, EditButton, Filter, List, ReferenceField, ReferenceInput, SelectInput, SimpleForm, TextField, TextInput} from 'react-admin';
+import {Create, Datagrid, DateField, Edit, EditButton, Filter, List, ReferenceField, ReferenceInput, SelectInput, SimpleForm, TextField, TextInput} from 'react-admin';
 
 
 const VerificationTitle = ({record}: any) => {
@@ -12,12 +12,12 @@ const VerificationTitle = ({record}: any) => {
 export const VerificationList = (props: any) => (
   <List filters={<VerificationFilter/>} {...props}>
     <Datagrid rowClick="edit">
+      <DateField source="createdAt" label="Created" showTime/>
       <ReferenceField label="Property" source="propertyId" reference="properties">
         <TextField source="name"/>
       </ReferenceField>
       <TextField source="name"/>
       <TextField source="attributes"/>
-      <TextField source="created"/>
       <EditButton/>
     </Datagrid>
   </List>

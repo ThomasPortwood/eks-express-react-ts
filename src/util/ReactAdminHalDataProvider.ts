@@ -23,7 +23,8 @@ export default async (token: string) => {
       const resourceName = resource.toLowerCase();
       const url = `${baseUrl}/${resourceName}`;
       return myFetchJson(url).then(({headers, json}: any) => {
-        return {data: json._embedded[resourceName], total: json.page.totalElements}
+        const total = json.page ? json.page.totalElements : json._embedded[resourceName].length;
+        return {data: json._embedded[resourceName], total}
       });
     },
 

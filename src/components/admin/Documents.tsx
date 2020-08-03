@@ -2,7 +2,7 @@ import React from 'react';
 // https://marmelab.com/react-admin/Tutorial.html
 // https://github.com/marmelab/react-admin/issues/4505
 // @ts-ignore
-import {Create, Datagrid, Edit, EditButton, Filter, List, ReferenceField, ReferenceInput, SelectInput, SimpleForm, TextField, TextInput, ImageInput, ImageField} from 'react-admin';
+import {Create, Datagrid, DateField, Edit, EditButton, Filter, List, ReferenceField, ReferenceInput, SelectInput, SimpleForm, TextField, TextInput, ImageInput, ImageField} from 'react-admin';
 import { Typography } from '@material-ui/core';
 
 const DocumentTitle = ({record}: any) => {
@@ -12,11 +12,11 @@ const DocumentTitle = ({record}: any) => {
 export const DocumentList = (props: any) => (
   <List filters={<DocumentFilter/>} {...props}>
     <Datagrid rowClick="edit">
+      <DateField source="createdAt" label="Created" showTime/>
       <ReferenceField label="Property" source="propertyId" reference="properties">
         <TextField source="name"/>
       </ReferenceField>
       <TextField source="name"/>
-      <TextField source="created"/>
       <TextField source="attributes"/>
       <EditButton/>
     </Datagrid>
