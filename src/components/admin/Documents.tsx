@@ -65,7 +65,7 @@ export const DocumentEdit = (props: any) => (
 
 const DocumentFilter = (props: any) => (
   <Filter {...props}>
-    <TextInput label="Search" source="q" alwaysOn/>
+    <TextInput source="name" alwaysOn/>
     {/*<ReferenceInput label="Property" source="property.id" reference="Property" allowEmpty>*/}
     {/*    <SelectInput optionText="name"/>*/}
     {/*</ReferenceInput>*/}

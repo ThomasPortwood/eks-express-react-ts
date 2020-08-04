@@ -21,7 +21,10 @@ export default async (token: string) => {
 
     getList: (resource: string, params: any = {}) => {
       const resourceName = resource.toLowerCase();
-      const url = `${baseUrl}/${resourceName}`;
+      let url = `${baseUrl}/${resourceName}`;
+
+      if (params.filter.name) url += `/search/findByNameContains?input=${params.filter.name ?? ""}`;
+      
       return myFetchJson(url).then(({headers, json}: any) => {
         const total = json.page ? json.page.totalElements : json._embedded[resourceName].length;
         return {data: json._embedded[resourceName], total}
@@ -38,15 +41,22 @@ export default async (token: string) => {
 
     getMany: (resource: string, params: any) => {
       const resourceName = resource.toLowerCase();
+
+      console.log(params);
+
       // TODO: implement filter in the backend
       const query = {
         filter: JSON.stringify({id: params.ids}),
       };
-      const url = `${baseUrl}/${resourceName}?${stringify(query)}`;
+
+      const url = `${baseUrl}/${resourceName}/search/findByNameContains?${params.name}`;
       return myFetchJson(url).then(({json}: any) => ({data: json._embedded[resourceName]}));
     },
 
     getManyReference: (resource: string, params: any) => {
+
+      console.log(params);
+
       const resourceName = resource.toLowerCase();
       const url = `${baseUrl}/${params.target}`;
       return myFetchJson(url).then(({json}: any) => ({data: json._embedded[resourceName]}));
