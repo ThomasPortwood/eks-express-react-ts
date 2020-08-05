@@ -24,9 +24,9 @@ export const ItemList = (props: any) => (
 
 export const ItemCreate = (props: any) => (
   <Create {...props}>
-    <SimpleForm>
+    <SimpleForm redirect="list">
       <ReferenceInput label="Property" source="property.id" reference="properties">
-        <SelectInput optionText="name"/>
+        <SelectInput optionText="address"/>
       </ReferenceInput>
       <TextInput source="name"/>
       <TextInput source="attributes" initialValue="{}"/>
@@ -38,7 +38,7 @@ export const ItemEdit = (props: any) => (
   <Edit title={<ItemTitle/>} {...props}>
     <SimpleForm>
       <ReferenceInput label="Property" source="propertyId" reference="properties">
-        <SelectInput optionText="name"/>
+        <SelectInput optionText="address"/>
       </ReferenceInput>
       <TextInput source="name"/>
       <TextInput source="attributes"/>

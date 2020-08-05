@@ -13,6 +13,7 @@ export const PropertyList = (props: any) => (
     <Datagrid rowClick="edit">
       <DateField source="createdAt" label="Created" showTime/>
       <TextField source="name"/>
+      <TextField source="address"/>
       <TextField source="attributes"/>
       <EditButton/>
     </Datagrid>
@@ -21,8 +22,9 @@ export const PropertyList = (props: any) => (
 
 export const PropertyCreate = (props: any) => (
   <Create {...props}>
-    <SimpleForm>
+    <SimpleForm redirect="list">
       <TextInput source="name"/>
+      <TextInput source="address"/>
       <TextInput source="attributes" initialValue="{}"/>
     </SimpleForm>
   </Create>
@@ -32,6 +34,7 @@ export const PropertyEdit = (props: any) => (
   <Edit title={<PropertyTitle/>} {...props}>
     <SimpleForm>
       <TextInput source="name"/>
+      <TextInput source="address" disabled/>
       <TextInput source="attributes"/>
     </SimpleForm>
   </Edit>

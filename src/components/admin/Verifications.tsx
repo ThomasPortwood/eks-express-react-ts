@@ -14,7 +14,7 @@ export const VerificationList = (props: any) => (
     <Datagrid rowClick="edit">
       <DateField source="createdAt" label="Created" showTime/>
       <ReferenceField label="Property" source="propertyId" reference="properties">
-        <TextField source="name"/>
+        <TextField source="address"/>
       </ReferenceField>
       <TextField source="name"/>
       <TextField source="attributes"/>
@@ -25,9 +25,9 @@ export const VerificationList = (props: any) => (
 
 export const VerificationCreate = (props: any) => (
   <Create {...props}>
-    <SimpleForm>
+    <SimpleForm redirect="list">
       <ReferenceInput label="Property" source="property.id" reference="properties">
-        <SelectInput optionText="name"/>
+        <SelectInput optionText="address"/>
       </ReferenceInput>
       <TextInput source="name"/>
       <TextInput source="attributes" initialValue="{}"/>
@@ -39,7 +39,7 @@ export const VerificationEdit = (props: any) => (
   <Edit title={<VerificationTitle/>} {...props}>
     <SimpleForm>
       <ReferenceInput label="Property" source="propertyId" reference="properties">
-        <SelectInput optionText="name"/>
+        <SelectInput optionText="address"/>
       </ReferenceInput>
       <TextInput source="name"/>
       <TextInput source="attributes"/>

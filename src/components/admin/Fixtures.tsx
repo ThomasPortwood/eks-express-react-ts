@@ -24,9 +24,9 @@ export const FixtureList = (props: any) => (
 
 export const FixtureCreate = (props: any) => (
   <Create {...props}>
-    <SimpleForm>
+    <SimpleForm redirect="list">
       <ReferenceInput label="Property" source="property.id" reference="properties">
-        <SelectInput optionText="name"/>
+        <SelectInput optionText="address"/>
       </ReferenceInput>
       <TextInput source="name"/>
       <TextInput source="attributes" initialValue="{}"/>
@@ -38,7 +38,7 @@ export const FixtureEdit = (props: any) => (
   <Edit title={<FixtureTitle/>} {...props}>
     <SimpleForm>
       <ReferenceInput label="Property" source="propertyId" reference="properties">
-        <SelectInput optionText="name"/>
+        <SelectInput optionText="address"/>
       </ReferenceInput>
       <TextInput source="name"/>
       <TextInput source="attributes"/>
