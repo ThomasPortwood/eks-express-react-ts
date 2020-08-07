@@ -2,7 +2,7 @@
 // @ts-ignore
 import {fetchUtils} from 'react-admin';
 // @ts-ignore
-import {stringify} from 'query-string';
+// import {stringify} from 'query-string';
 
 const baseUrl = process.env.REACT_APP_HAL_ENDPOINT;
 
@@ -20,18 +20,28 @@ export default async (token: string) => {
   return {
 
     getList: (resource: string, params: any = {}) => {
+
+      console.log(`GET LIST ${resource}`);
+
       const resourceName = resource.toLowerCase();
       let url = `${baseUrl}/${resourceName}`;
 
       if (params.filter.name) url += `/search/findByNameContains?input=${params.filter.name ?? ""}`;
-      
+
       return myFetchJson(url).then(({headers, json}: any) => {
         const total = json.page ? json.page.totalElements : json._embedded[resourceName].length;
-        return {data: json._embedded[resourceName], total}
+        // https://marmelab.com/admin-on-rest/FAQ.html#can-i-have-custom-identifiers-primary-keys-for-my-resources
+        const data = resourceName === 'groups'
+          ? json._embedded[resourceName].map((resource: any) => { return {...resource, id: resource.name}})
+          : json._embedded[resourceName];
+        return {data, total}
       });
     },
 
     getOne: (resource: string, params: any = {}) => {
+
+      console.log(`GET ONE ${resource}`);
+
       const resourceName = resource.toLowerCase();
       const url = `${baseUrl}/${resourceName}/${params.id}`;
       return myFetchJson(url).then(({headers, json}: any) => {
@@ -40,22 +50,23 @@ export default async (token: string) => {
     },
 
     getMany: (resource: string, params: any) => {
+
+      console.log(`GET MANY ${resource}`);
+
       const resourceName = resource.toLowerCase();
 
-      console.log(params);
+      // TODO: implement id filter in the backend
+      // const query = {
+      //   filter: JSON.stringify({id: params.ids}),
+      // };
 
-      // TODO: implement filter in the backend
-      const query = {
-        filter: JSON.stringify({id: params.ids}),
-      };
-
-      const url = `${baseUrl}/${resourceName}/search/findByNameContains?${params.name}`;
+      const url = `${baseUrl}/${resourceName}`;
       return myFetchJson(url).then(({json}: any) => ({data: json._embedded[resourceName]}));
     },
 
     getManyReference: (resource: string, params: any) => {
 
-      console.log(params);
+      console.log(`GET MANY REF ${resource}`);
 
       const resourceName = resource.toLowerCase();
       const url = `${baseUrl}/${params.target}`;
@@ -63,6 +74,9 @@ export default async (token: string) => {
     },
 
     create: (resource: string, params: any = {}) => {
+
+      console.log(`CREATE ${resource}`);
+
       const resourceName = resource.toLowerCase();
       const url = `${baseUrl}/${resourceName}`;
 
@@ -76,7 +90,6 @@ export default async (token: string) => {
         body.append("name", params.data.name);
         body.append("description", params.data.description);
       } else {
-        console.log('json');
         body = JSON.stringify(params.data);
       }
 

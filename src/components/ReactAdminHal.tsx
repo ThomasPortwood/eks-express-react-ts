@@ -3,28 +3,24 @@ import React, {useEffect, useState} from 'react';
 // https://auth0.com/docs/quickstart/spa/react
 import {useAuth0} from "../contexts/auth0-context";
 // https://www.apollographql.com/docs/react/get-started/
-import {ApolloProvider} from '@apollo/react-hooks';
 // https://marmelab.com/react-admin/Tutorial.html
 // https://github.com/marmelab/react-admin/issues/4505
 // @ts-ignore
 import {Admin, Resource} from 'react-admin';
 // mine
-import {buildApolloClient} from "../util/ApolloUtil";
 import {PropertyCreate, PropertyEdit, PropertyList} from "./admin/Properties";
-import {FixtureCreate, FixtureEdit, FixtureList} from "./admin/Fixtures";
 import Dashboard from "./admin/Overview";
 import {MyLogoutButton} from "./admin/MyLogoutButton";
 import {DocumentCreate, DocumentEdit, DocumentList} from "./admin/Documents";
 import createReactAdminHalDataProvider from "../util/ReactAdminHalDataProvider";
-import {ItemCreate, ItemEdit, ItemList} from "./admin/Items";
 import {MemberList} from "./admin/Members";
+import {GroupList} from "./admin/Groups";
 
 
 export const ReactAdminHal = () => {
 
   const {getIdTokenClaims, getTokenSilently, isAuthenticated, isLoading, loginWithRedirect, logout} = useAuth0();
   const [reactAdminAuthProvider, setReactAdminAuthProvider] = useState<any>(null);
-  const [apolloClient, setApolloClient] = useState<any>(null);
   const [reactAdminDataProvider, setReactAdminDataProvider] = useState<any>(null);
 
   useEffect(() => {
@@ -39,9 +35,7 @@ export const ReactAdminHal = () => {
 
     const createApolloClientAndReactAdminDataProvider = async () => {
       const token = await getTokenSilently();
-      const apolloClient = buildApolloClient(token);
       const dataProvider = await createReactAdminHalDataProvider(token);
-      setApolloClient(apolloClient);
       setReactAdminDataProvider(dataProvider);
     };
 
@@ -77,21 +71,20 @@ export const ReactAdminHal = () => {
   return (
     <div>
       {!isAuthenticated && loginWithRedirect({})}
-      {isAuthenticated && apolloClient && reactAdminAuthProvider && reactAdminDataProvider && (
-        <ApolloProvider client={apolloClient}>
-          <Admin
-            authProvider={reactAdminAuthProvider}
-            logOutButton={MyLogoutButton}
-            dashboard={Dashboard}
-            dataProvider={reactAdminDataProvider}
-          >
-            <Resource name="members" list={MemberList}/>
-            <Resource name="properties" list={PropertyList} create={PropertyCreate} edit={PropertyEdit}/>
-            <Resource name="fixtures" list={FixtureList} create={FixtureCreate} edit={FixtureEdit}/>
-            <Resource name="items" list={ItemList} create={ItemCreate} edit={ItemEdit}/>
-            <Resource name="documents" list={DocumentList} create={DocumentCreate} edit={DocumentEdit}/>
-          </Admin>
-        </ApolloProvider>
+      {isAuthenticated && reactAdminAuthProvider && reactAdminDataProvider && (
+        <Admin
+          authProvider={reactAdminAuthProvider}
+          logOutButton={MyLogoutButton}
+          dashboard={Dashboard}
+          dataProvider={reactAdminDataProvider}
+        >
+          <Resource name="members" list={MemberList}/>
+          <Resource name="groups" list={GroupList}/>
+          <Resource name="properties" list={PropertyList} create={PropertyCreate} edit={PropertyEdit}/>
+          {/*<Resource name="fixtures" list={FixtureList} create={FixtureCreate} edit={FixtureEdit}/>*/}
+          {/*<Resource name="items" list={ItemList} create={ItemCreate} edit={ItemEdit}/>*/}
+          <Resource name="documents" list={DocumentList} create={DocumentCreate} edit={DocumentEdit}/>
+        </Admin>
       )}
     </div>
   )

@@ -23,20 +23,26 @@ export const DocumentList = (props: any) => (
   </List>
 );
 
-export const DocumentCreate = (props: any) => (
-  <Create {...props}>
-    <SimpleForm>
-      <ReferenceInput label="Property" source="property.id" reference="properties">
-        <SelectInput optionText="name"/>
-      </ReferenceInput>
-      <TextInput source="name"/>
-      <TextInput source="description"/>
-      <ImageInput source="picture" label="Picture" accept="image/*" multiple={false}>
-        <ImageField source="src" title="title" />
-      </ImageInput>
-    </SimpleForm>
-  </Create>
-);
+export const DocumentCreate = (props: any) => {
+
+
+  console.log(props);
+
+  return (
+    <Create {...props}>
+      <SimpleForm initialValues={{property_id: 1}}>
+        <ReferenceInput label="Property" source="property.id" reference="properties">
+          <SelectInput optionText="name"/>
+        </ReferenceInput>
+        <TextInput source="name"/>
+        <TextInput source="description"/>
+        <ImageInput source="picture" label="Picture" accept="image/*" multiple={false}>
+          <ImageField source="src" title="title" />
+        </ImageInput>
+      </SimpleForm>
+    </Create>
+  );
+};
 
 const Aside = () => (
   <div style={{ width: 200, margin: '1em' }}>

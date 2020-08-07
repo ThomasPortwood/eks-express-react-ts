@@ -2,7 +2,10 @@ import React from 'react';
 // https://marmelab.com/react-admin/Tutorial.html
 // https://github.com/marmelab/react-admin/issues/4505
 // @ts-ignore
-import {Create, Datagrid, DateField, Edit, EditButton, Filter, List, SimpleForm, TextField, TextInput} from 'react-admin';
+import {Create, Datagrid, DateField, Edit, EditButton, Filter, List, ReferenceField, ReferenceInput, SelectInput, SimpleForm, TabbedForm, FormTab, TextField, TextInput} from 'react-admin';
+
+
+import MyMapbox from "../MyMapbox";
 
 const PropertyTitle = ({record}: any) => {
   return <span>Property {record ? `"${record.name}"` : ''}</span>;
@@ -11,10 +14,12 @@ const PropertyTitle = ({record}: any) => {
 export const PropertyList = (props: any) => (
   <List filters={<PropertyFilter/>} {...props}>
     <Datagrid rowClick="edit">
-      <DateField source="createdAt" label="Created" showTime/>
+      <ReferenceField label="Group" source="groupName" reference="groups">
+        <TextField source="name"/>
+      </ReferenceField>
       <TextField source="name"/>
       <TextField source="address"/>
-      <TextField source="attributes"/>
+      <DateField source="createdAt" label="Created" showTime/>
       <EditButton/>
     </Datagrid>
   </List>
@@ -23,6 +28,9 @@ export const PropertyList = (props: any) => (
 export const PropertyCreate = (props: any) => (
   <Create {...props}>
     <SimpleForm redirect="list">
+      <ReferenceInput label="Group" source="groupName" reference="groups">
+        <SelectInput optionText="name"/>
+      </ReferenceInput>
       <TextInput source="name"/>
       <TextInput source="address"/>
       <TextInput source="attributes" initialValue="{}"/>
@@ -32,11 +40,23 @@ export const PropertyCreate = (props: any) => (
 
 export const PropertyEdit = (props: any) => (
   <Edit title={<PropertyTitle/>} {...props}>
-    <SimpleForm>
-      <TextInput source="name"/>
-      <TextInput source="address" disabled/>
-      <TextInput source="attributes"/>
-    </SimpleForm>
+    <TabbedForm>
+      <FormTab label="Address" onSelect={() => console.log('hello!!!')}>
+        <TextInput source="address"/>
+        <MyMapbox/>
+      </FormTab>
+      <FormTab label="Details">
+        <ReferenceInput label="Group" source="groupName" reference="groups">
+          <SelectInput optionText="name"/>
+        </ReferenceInput>
+        <TextInput source="name"/>
+      </FormTab>
+      <FormTab label="Fixtures">
+      </FormTab>
+      <FormTab label="Misc">
+        <TextInput source="attributes"/>
+      </FormTab>
+    </TabbedForm>
   </Edit>
 );
 
