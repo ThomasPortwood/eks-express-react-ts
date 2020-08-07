@@ -30,11 +30,11 @@ export default async (token: string) => {
 
       return myFetchJson(url).then(({headers, json}: any) => {
         const total = json.page ? json.page.totalElements : json._embedded[resourceName].length;
+
         // https://marmelab.com/admin-on-rest/FAQ.html#can-i-have-custom-identifiers-primary-keys-for-my-resources
-        const data = resourceName === 'groups'
-          ? json._embedded[resourceName].map((resource: any) => { return {...resource, id: resource.name}})
-          : json._embedded[resourceName];
-        return {data, total}
+        // const data = json._embedded[resourceName].map((resource: any) => { return {...resource, id: resource._links.self.href}})
+
+        return {data: json._embedded[resourceName], total}
       });
     },
 
@@ -44,6 +44,7 @@ export default async (token: string) => {
 
       const resourceName = resource.toLowerCase();
       const url = `${baseUrl}/${resourceName}/${params.id}`;
+
       return myFetchJson(url).then(({headers, json}: any) => {
         return {data: json}
       })
@@ -100,6 +101,9 @@ export default async (token: string) => {
     },
 
     delete: (resource: string, params: any = {}) => {
+
+      console.log(`DELETE ${resource}`);
+
       const resourceName = resource.toLowerCase();
       const url = `${baseUrl}/${resourceName}/${params.id}`;
       return myFetchJson(url, {method: "DELETE",})
@@ -109,6 +113,9 @@ export default async (token: string) => {
     },
 
     deleteMany: (resource: string, params: any = {}) => {
+
+      console.log(`DELETE MANY ${resource}`);
+
       const resourceName = resource.toLowerCase();
       return Promise.all(params.ids.map((id: bigint) => {
         const url = `${baseUrl}/${resourceName}/${id}`;
@@ -119,8 +126,12 @@ export default async (token: string) => {
     },
 
     update: (resource: string, params: any = {}) => {
+
+      console.log(`UPDATE ${resource}`);
+
       const resourceName = resource.toLowerCase();
       const url = `${baseUrl}/${resourceName}/${params.id}`;
+
       return myFetchJson(url, {method: "PUT", body: JSON.stringify(params.data)})
         .then(({headers, json}: any) => {
           return {data: json, id: json.id};

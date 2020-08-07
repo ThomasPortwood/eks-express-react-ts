@@ -11,24 +11,26 @@ const PropertyTitle = ({record}: any) => {
   return <span>Property {record ? `"${record.name}"` : ''}</span>;
 };
 
-export const PropertyList = (props: any) => (
-  <List filters={<PropertyFilter/>} {...props}>
-    <Datagrid rowClick="edit">
-      <ReferenceField label="Group" source="groupName" reference="groups">
+export const PropertyList = (props: any) => {
+  return (
+    <List filters={<PropertyFilter/>} {...props}>
+      <Datagrid rowClick="edit">
+        <ReferenceField label="Club" source="clubId" reference="clubs">
+          <TextField source="name"/>
+        </ReferenceField>
         <TextField source="name"/>
-      </ReferenceField>
-      <TextField source="name"/>
-      <TextField source="address"/>
-      <DateField source="createdAt" label="Created" showTime/>
-      <EditButton/>
-    </Datagrid>
-  </List>
-);
+        <TextField source="address"/>
+        <DateField source="createdAt" label="Created" showTime/>
+        <EditButton/>
+      </Datagrid>
+    </List>
+  )
+};
 
 export const PropertyCreate = (props: any) => (
   <Create {...props}>
     <SimpleForm redirect="list">
-      <ReferenceInput label="Group" source="groupName" reference="groups">
+      <ReferenceInput label="Club" source="clubId" reference="clubs">
         <SelectInput optionText="name"/>
       </ReferenceInput>
       <TextInput source="name"/>
@@ -36,29 +38,31 @@ export const PropertyCreate = (props: any) => (
       <TextInput source="attributes" initialValue="{}"/>
     </SimpleForm>
   </Create>
-)
-
-export const PropertyEdit = (props: any) => (
-  <Edit title={<PropertyTitle/>} {...props}>
-    <TabbedForm>
-      <FormTab label="Address" onSelect={() => console.log('hello!!!')}>
-        <TextInput source="address"/>
-        <MyMapbox/>
-      </FormTab>
-      <FormTab label="Details">
-        <ReferenceInput label="Group" source="groupName" reference="groups">
-          <SelectInput optionText="name"/>
-        </ReferenceInput>
-        <TextInput source="name"/>
-      </FormTab>
-      <FormTab label="Fixtures">
-      </FormTab>
-      <FormTab label="Misc">
-        <TextInput source="attributes"/>
-      </FormTab>
-    </TabbedForm>
-  </Edit>
 );
+
+export const PropertyEdit = (props: any) => {
+  return (
+    <Edit title={<PropertyTitle/>} {...props}>
+      <TabbedForm>
+        <FormTab label="Address">
+          <TextInput source="address"/>
+          <MyMapbox/>
+        </FormTab>
+        <FormTab label="Details">
+          <ReferenceInput label="Club" source="clubId" reference="clubs">
+            <SelectInput optionText="name"/>
+          </ReferenceInput>
+          <TextInput source="name"/>
+        </FormTab>
+        <FormTab label="Fixtures">
+        </FormTab>
+        <FormTab label="Misc">
+          <TextInput source="attributes"/>
+        </FormTab>
+      </TabbedForm>
+    </Edit>
+  )
+};
 
 const PropertyFilter = (props: any) => (
   <Filter {...props}>

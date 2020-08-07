@@ -11,10 +11,9 @@ import {Admin, Resource} from 'react-admin';
 import {PropertyCreate, PropertyEdit, PropertyList} from "./admin/Properties";
 import Dashboard from "./admin/Overview";
 import {MyLogoutButton} from "./admin/MyLogoutButton";
-import {DocumentCreate, DocumentEdit, DocumentList} from "./admin/Documents";
 import createReactAdminHalDataProvider from "../util/ReactAdminHalDataProvider";
 import {MemberList} from "./admin/Members";
-import {GroupList} from "./admin/Groups";
+import {ClubCreate, ClubList} from "./admin/Clubs";
 
 
 export const ReactAdminHal = () => {
@@ -79,11 +78,11 @@ export const ReactAdminHal = () => {
           dataProvider={reactAdminDataProvider}
         >
           <Resource name="members" list={MemberList}/>
-          <Resource name="groups" list={GroupList}/>
+          <Resource name="clubs" list={ClubList} create={ClubCreate}/>
           <Resource name="properties" list={PropertyList} create={PropertyCreate} edit={PropertyEdit}/>
           {/*<Resource name="fixtures" list={FixtureList} create={FixtureCreate} edit={FixtureEdit}/>*/}
           {/*<Resource name="items" list={ItemList} create={ItemCreate} edit={ItemEdit}/>*/}
-          <Resource name="documents" list={DocumentList} create={DocumentCreate} edit={DocumentEdit}/>
+          {/*<Resource name="documents" list={DocumentList} create={DocumentCreate} edit={DocumentEdit}/>*/}
         </Admin>
       )}
     </div>
