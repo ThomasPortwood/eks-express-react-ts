@@ -9,11 +9,12 @@ import {useAuth0} from "../contexts/auth0-context";
 import {Admin, Resource} from 'react-admin';
 // mine
 import {PropertyCreate, PropertyEdit, PropertyList} from "./admin/Properties";
-import Dashboard from "./admin/Overview";
+import Overview from "./admin/Overview";
 import {MyLogoutButton} from "./admin/MyLogoutButton";
 import createReactAdminHalDataProvider from "../util/ReactAdminHalDataProvider";
 import {MemberList} from "./admin/Members";
-import {ClubCreate, ClubList} from "./admin/Clubs";
+import {ClubCreate, ClubEdit, ClubList} from "./admin/Clubs";
+import {ClubMemberList, ClubMemberCreate} from "./admin/ClubMembers";
 
 
 export const ReactAdminHal = () => {
@@ -70,16 +71,18 @@ export const ReactAdminHal = () => {
   return (
     <div>
       {!isAuthenticated && loginWithRedirect({})}
-      {isAuthenticated && reactAdminAuthProvider && reactAdminDataProvider && (
+      {reactAdminAuthProvider && reactAdminDataProvider && (
         <Admin
           authProvider={reactAdminAuthProvider}
           logOutButton={MyLogoutButton}
-          dashboard={Dashboard}
+          dashboard={Overview}
           dataProvider={reactAdminDataProvider}
         >
+          <Resource name="clubs" list={ClubList} create={ClubCreate} edit={ClubEdit}/>
           <Resource name="members" list={MemberList}/>
-          <Resource name="clubs" list={ClubList} create={ClubCreate}/>
-          <Resource name="properties" list={PropertyList} create={PropertyCreate} edit={PropertyEdit}/>
+          <Resource name="clubMembers" create={ClubMemberCreate}/>
+          {/*<Resource name="clubMembers" list={ClubMemberList} create={ClubMemberCreate}/>*/}
+          <Resource name="properties" create={PropertyCreate} edit={PropertyEdit}/>
           {/*<Resource name="fixtures" list={FixtureList} create={FixtureCreate} edit={FixtureEdit}/>*/}
           {/*<Resource name="items" list={ItemList} create={ItemCreate} edit={ItemEdit}/>*/}
           {/*<Resource name="documents" list={DocumentList} create={DocumentCreate} edit={DocumentEdit}/>*/}

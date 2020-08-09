@@ -4,5 +4,5 @@ import React from "react";
 
 export const MyLogoutButton = () => {
   const {logout} = useAuth0();
-  return (<Button onClick={() => logout({})} color="inherit">Logout</Button>)
+  return (<Button onClick={() => logout({})}>Logout</Button>)
 };

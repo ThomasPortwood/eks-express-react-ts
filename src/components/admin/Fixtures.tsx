@@ -24,7 +24,7 @@ export const FixtureList = (props: any) => (
 
 export const FixtureCreate = (props: any) => (
   <Create {...props}>
-    <SimpleForm redirect="list">
+    <SimpleForm>
       {/*<ReferenceInput label="Property" source="property.id" reference="properties">*/}
       {/*  <SelectInput optionText="address"/>*/}
       {/*</ReferenceInput>*/}

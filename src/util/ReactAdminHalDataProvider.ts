@@ -1,6 +1,7 @@
 // https://marmelab.com/react-admin/DataProviders.html
 // @ts-ignore
 import {fetchUtils} from 'react-admin';
+import {stringify} from "query-string";
 // @ts-ignore
 // import {stringify} from 'query-string';
 
@@ -9,11 +10,13 @@ const baseUrl = process.env.REACT_APP_HAL_ENDPOINT;
 export default async (token: string) => {
 
   const myFetchJson = (url: string, options: any = {}) => {
+
     if (!options.headers) {
       options.headers = new Headers({});
     }
-    // options.headers.set('Content-Type', 'application/hal+json');
+
     options.headers.set('Authorization', `Bearer ${token}`);
+
     return fetchUtils.fetchJson(url, options);
   };
 
@@ -23,28 +26,26 @@ export default async (token: string) => {
 
       console.log(`GET LIST ${resource}`);
 
-      const resourceName = resource.toLowerCase();
-      let url = `${baseUrl}/${resourceName}`;
+      let url = `${baseUrl}/${resource}`;
 
+      // TODO: query-string
       if (params.filter.name) url += `/search/findByNameContains?input=${params.filter.name ?? ""}`;
+      if (resource === 'clubs') url += '?projection=clubMembers';
 
       return myFetchJson(url).then(({headers, json}: any) => {
-        const total = json.page ? json.page.totalElements : json._embedded[resourceName].length;
+
+        const total = json.page ? json.page.totalElements : json._embedded[resource].length;
 
         // https://marmelab.com/admin-on-rest/FAQ.html#can-i-have-custom-identifiers-primary-keys-for-my-resources
         // const data = json._embedded[resourceName].map((resource: any) => { return {...resource, id: resource._links.self.href}})
 
-        return {data: json._embedded[resourceName], total}
+        return {data: json._embedded[resource], total}
       });
     },
 
     getOne: (resource: string, params: any = {}) => {
-
       console.log(`GET ONE ${resource}`);
-
-      const resourceName = resource.toLowerCase();
-      const url = `${baseUrl}/${resourceName}/${params.id}`;
-
+      let url = `${baseUrl}/${resource}/${params.id}`;
       return myFetchJson(url).then(({headers, json}: any) => {
         return {data: json}
       })
@@ -54,32 +55,33 @@ export default async (token: string) => {
 
       console.log(`GET MANY ${resource}`);
 
-      const resourceName = resource.toLowerCase();
-
       // TODO: implement id filter in the backend
       // const query = {
       //   filter: JSON.stringify({id: params.ids}),
       // };
 
-      const url = `${baseUrl}/${resourceName}`;
-      return myFetchJson(url).then(({json}: any) => ({data: json._embedded[resourceName]}));
+      const url = `${baseUrl}/${resource}`;
+      return myFetchJson(url).then(({json}: any) => ({data: json._embedded[resource]}));
     },
 
     getManyReference: (resource: string, params: any) => {
-
       console.log(`GET MANY REF ${resource}`);
-
-      const resourceName = resource.toLowerCase();
-      const url = `${baseUrl}/${params.target}`;
-      return myFetchJson(url).then(({json}: any) => ({data: json._embedded[resourceName]}));
+      const { page, perPage } = params.pagination;
+      const { field, order } = params.sort;
+      const query = {
+        // sort: JSON.stringify([field, order]),
+        page,
+        size: perPage
+      };
+      const url = `${baseUrl}${params.target}?${stringify(query)}`;
+      return myFetchJson(url).then(({json}: any) => ({data: json._embedded[resource]}));
     },
 
     create: (resource: string, params: any = {}) => {
 
       console.log(`CREATE ${resource}`);
 
-      const resourceName = resource.toLowerCase();
-      const url = `${baseUrl}/${resourceName}`;
+      const url = `${baseUrl}/${resource}`;
 
       let body;
 
@@ -95,30 +97,21 @@ export default async (token: string) => {
       }
 
       return myFetchJson(url, {method: "POST", body})
-        .then(({headers, json}: any) => {
-          return {data: json, id: json.id};
-        })
+        .then(
+          ({headers, json}: any) => ({data: json, id: json.id}),
+          (error: any) => ({data: error}))
     },
 
     delete: (resource: string, params: any = {}) => {
-
       console.log(`DELETE ${resource}`);
-
-      const resourceName = resource.toLowerCase();
-      const url = `${baseUrl}/${resourceName}/${params.id}`;
-      return myFetchJson(url, {method: "DELETE",})
-        .then(() => {
-          return {data: {}};
-        })
+      const url = `${baseUrl}/${resource}/${params.id}`;
+      return myFetchJson(url, {method: "DELETE"}).then(() => {return {data: {}};})
     },
 
     deleteMany: (resource: string, params: any = {}) => {
-
       console.log(`DELETE MANY ${resource}`);
-
-      const resourceName = resource.toLowerCase();
       return Promise.all(params.ids.map((id: bigint) => {
-        const url = `${baseUrl}/${resourceName}/${id}`;
+        const url = `${baseUrl}/${resource}/${id}`;
         return myFetchJson(url, {method: "DELETE"})
       })).then(() => {
         return {data: {}}
@@ -126,12 +119,8 @@ export default async (token: string) => {
     },
 
     update: (resource: string, params: any = {}) => {
-
       console.log(`UPDATE ${resource}`);
-
-      const resourceName = resource.toLowerCase();
-      const url = `${baseUrl}/${resourceName}/${params.id}`;
-
+      const url = `${baseUrl}/${resource}/${params.id}`;
       return myFetchJson(url, {method: "PUT", body: JSON.stringify(params.data)})
         .then(({headers, json}: any) => {
           return {data: json, id: json.id};

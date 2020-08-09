@@ -5,7 +5,7 @@ import React from 'react';
 import {Create, Datagrid, DateField, Edit, EditButton, Filter, List, ReferenceField, ReferenceInput, SelectInput, SimpleForm, TabbedForm, FormTab, TextField, TextInput} from 'react-admin';
 
 
-import MyMapbox from "../MyMapbox";
+import MyMapbox from "./MyMapbox";
 
 const PropertyTitle = ({record}: any) => {
   return <span>Property {record ? `"${record.name}"` : ''}</span>;
@@ -15,11 +15,14 @@ export const PropertyList = (props: any) => {
   return (
     <List filters={<PropertyFilter/>} {...props}>
       <Datagrid rowClick="edit">
+        <TextField source="name"/>
+        <TextField source="address"/>
+        <ReferenceField label="Owner" source="ownerId" reference="members">
+          <TextField source="name"/>
+        </ReferenceField>
         <ReferenceField label="Club" source="clubId" reference="clubs">
           <TextField source="name"/>
         </ReferenceField>
-        <TextField source="name"/>
-        <TextField source="address"/>
         <DateField source="createdAt" label="Created" showTime/>
         <EditButton/>
       </Datagrid>
@@ -29,7 +32,7 @@ export const PropertyList = (props: any) => {
 
 export const PropertyCreate = (props: any) => (
   <Create {...props}>
-    <SimpleForm redirect="list">
+    <SimpleForm>
       <ReferenceInput label="Club" source="clubId" reference="clubs">
         <SelectInput optionText="name"/>
       </ReferenceInput>
@@ -48,13 +51,16 @@ export const PropertyEdit = (props: any) => {
           <TextInput source="address"/>
           <MyMapbox/>
         </FormTab>
-        <FormTab label="Details">
+        <FormTab label="Fixtures">
+        </FormTab>
+        <FormTab label="Settings">
+          <ReferenceInput label="Owner" source="ownerId" reference="members">
+            <TextField source="name"/>
+          </ReferenceInput>
           <ReferenceInput label="Club" source="clubId" reference="clubs">
             <SelectInput optionText="name"/>
           </ReferenceInput>
           <TextInput source="name"/>
-        </FormTab>
-        <FormTab label="Fixtures">
         </FormTab>
         <FormTab label="Misc">
           <TextInput source="attributes"/>

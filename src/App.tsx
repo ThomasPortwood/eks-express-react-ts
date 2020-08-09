@@ -6,7 +6,7 @@ import {BrowserRouter, Route, Switch} from "react-router-dom";
 import './App.css';
 import {ReactAdminHal} from "./components/ReactAdminHal";
 import MyVoyager from "./components/MyVoyager";
-import MyMapbox from "./components/MyMapbox";
+import MyMapbox from "./components/admin/MyMapbox";
 
 function App() {
   return (
