@@ -8,13 +8,15 @@ import {useAuth0} from "../contexts/auth0-context";
 // @ts-ignore
 import {Admin, Resource} from 'react-admin';
 // mine
-import {PropertyCreate, PropertyEdit, PropertyList} from "./admin/Properties";
+import {PropertyCreate, PropertyEdit} from "./admin/Properties";
 import Overview from "./admin/Overview";
 import {MyLogoutButton} from "./admin/MyLogoutButton";
 import createReactAdminHalDataProvider from "../util/ReactAdminHalDataProvider";
 import {MemberList} from "./admin/Members";
 import {ClubCreate, ClubEdit, ClubList} from "./admin/Clubs";
-import {ClubMemberList, ClubMemberCreate} from "./admin/ClubMembers";
+import {ClubMemberCreate} from "./admin/ClubMembers";
+import {DocumentCreate, DocumentEdit} from "./admin/Documents";
+import {FixtureCreate, FixtureEdit} from "./admin/Fixtures";
 
 
 export const ReactAdminHal = () => {
@@ -78,14 +80,12 @@ export const ReactAdminHal = () => {
           dashboard={Overview}
           dataProvider={reactAdminDataProvider}
         >
+          <Resource name="members" options={{ label: 'Users' }} list={MemberList}/>
           <Resource name="clubs" list={ClubList} create={ClubCreate} edit={ClubEdit}/>
-          <Resource name="members" list={MemberList}/>
           <Resource name="clubMembers" create={ClubMemberCreate}/>
-          {/*<Resource name="clubMembers" list={ClubMemberList} create={ClubMemberCreate}/>*/}
           <Resource name="properties" create={PropertyCreate} edit={PropertyEdit}/>
-          {/*<Resource name="fixtures" list={FixtureList} create={FixtureCreate} edit={FixtureEdit}/>*/}
-          {/*<Resource name="items" list={ItemList} create={ItemCreate} edit={ItemEdit}/>*/}
-          {/*<Resource name="documents" list={DocumentList} create={DocumentCreate} edit={DocumentEdit}/>*/}
+          <Resource name="fixtures" create={FixtureCreate} edit={FixtureEdit}/>
+          <Resource name="documents" create={DocumentCreate} edit={DocumentEdit}/>
         </Admin>
       )}
     </div>

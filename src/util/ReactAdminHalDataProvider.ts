@@ -67,7 +67,7 @@ export default async (token: string) => {
     getManyReference: (resource: string, params: any) => {
       console.log(`GET MANY REF ${resource}`);
       const { page, perPage } = params.pagination;
-      const { field, order } = params.sort;
+      // const { field, order } = params.sort;
       const query = {
         // sort: JSON.stringify([field, order]),
         page,

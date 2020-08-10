@@ -2,7 +2,7 @@ import React from 'react';
 // https://marmelab.com/react-admin/Tutorial.html
 // https://github.com/marmelab/react-admin/issues/4505
 // @ts-ignore
-import {Button, Create, Datagrid, DeleteButton, Edit, EditButton, List, ReferenceField, ReferenceInput, SelectInput, SimpleForm, TabbedForm, FormTab, ReferenceManyField, TextField, TextInput} from 'react-admin';
+import {Button, Create, Datagrid, DeleteButton, DeleteWithConfirmButton, Edit, EditButton, List, ReferenceField, ReferenceInput, SelectInput, SimpleForm, TabbedForm, FormTab, ReferenceManyField, TextField, TextInput} from 'react-admin';
 import { Link } from 'react-router-dom';
 
 const ClubTitle = ({record}: any) => {
@@ -33,9 +33,14 @@ export const ClubCreate = (props: any) => (
 );
 
 export const ClubEdit = (props: any) => {
+
+  console.log(props);
+
+  const deleteRedirect = props.id ? `/clubs/${props.id}` : "/clubs";
+
   return (
     <Edit title={<ClubTitle/>} {...props}>
-      <TabbedForm>
+      <TabbedForm redirect={false}>
         <FormTab label="Members">
           <ReferenceManyField reference="clubMembers" target={`${props.basePath}/${props.id}/clubMembers`} >
             <Datagrid>
@@ -44,10 +49,10 @@ export const ClubEdit = (props: any) => {
               </ReferenceField>
               <TextField label="Permission"/>
               <EditButton/>
-              <DeleteButton/>
+              <DeleteButton label="Remove" redirect={deleteRedirect}/>
             </Datagrid>
           </ReferenceManyField>
-          <AddClubMemberButton />
+          <AddClubMemberButton/>
         </FormTab>
         <FormTab label="Properties">
           <ReferenceManyField reference="properties" target={`${props.basePath}/${props.id}/properties`} >
@@ -58,7 +63,7 @@ export const ClubEdit = (props: any) => {
               <TextField source="name"/>
               <TextField source="address"/>
               <EditButton/>
-              <DeleteButton/>
+              <DeleteButton redirect={deleteRedirect}/>
             </Datagrid>
           </ReferenceManyField>
           <AddPropertyButton />
@@ -75,20 +80,20 @@ export const ClubEdit = (props: any) => {
   )
 };
 
-const AddClubMemberButton = ({ classes, record }: any) => (
-  <Button
-    variant="raised"
-    component={Link}
-    to={`/clubMembers/create`}
-    label="Add"
-  />
-);
+const AddClubMemberButton = ({ classes, record }: any) => {
+  return (
+    <Button
+      component={Link}
+      to={`/clubMembers/create?clubId=${record.id}`}
+      label="Add"
+    />
+  )
+};
 
 const AddPropertyButton = ({ classes, record }: any) => (
   <Button
-    variant="raised"
     component={Link}
-    to={`/properties/create`}
+    to={`/properties/create?clubId=${record.id}`}
     label="Add"
   />
 );
