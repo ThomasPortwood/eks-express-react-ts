@@ -31,7 +31,7 @@ export const PropertyCreate = (props: any) => {
 export const PropertyEdit = (props: any) => {
   return (
     <Edit title={<PropertyTitle/>} {...props}>
-      <TabbedForm>
+      <TabbedForm redirect={false}>
         <FormTab label="Address">
           <TextInput source="address"/>
           <MyMapbox record={props.record}/>
