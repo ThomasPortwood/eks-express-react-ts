@@ -6,7 +6,6 @@ import {BrowserRouter, Route, Switch} from "react-router-dom";
 import './App.css';
 import {ReactAdminHal} from "./components/ReactAdminHal";
 import MyVoyager from "./components/MyVoyager";
-import MyMapbox from "./components/admin/MyMapbox";
 
 function App() {
   return (
@@ -15,9 +14,6 @@ function App() {
         <Switch>
           <Route exact path="/schema">
             <MyVoyager/>
-          </Route>
-          <Route exact path="/map">
-            <MyMapbox/>
           </Route>
           <Route path="/">
             <ReactAdminHal/>

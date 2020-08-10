@@ -2,7 +2,7 @@ import React from 'react';
 // https://marmelab.com/react-admin/Tutorial.html
 // https://github.com/marmelab/react-admin/issues/4505
 // @ts-ignore
-import {Button, Create, Datagrid, DeleteButton, DeleteWithConfirmButton, Edit, EditButton, List, ReferenceField, ReferenceInput, SelectInput, SimpleForm, TabbedForm, FormTab, ReferenceManyField, TextField, TextInput} from 'react-admin';
+import {Button, Create, Datagrid, DeleteButton, Edit, EditButton, List, ReferenceField, ReferenceInput, SelectInput, SimpleForm, TabbedForm, FormTab, ReferenceManyField, TextField, TextInput} from 'react-admin';
 import { Link } from 'react-router-dom';
 
 const ClubTitle = ({record}: any) => {
@@ -33,11 +33,7 @@ export const ClubCreate = (props: any) => (
 );
 
 export const ClubEdit = (props: any) => {
-
-  console.log(props);
-
   const deleteRedirect = props.id ? `/clubs/${props.id}` : "/clubs";
-
   return (
     <Edit title={<ClubTitle/>} {...props}>
       <TabbedForm redirect={false}>

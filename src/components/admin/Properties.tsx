@@ -34,7 +34,7 @@ export const PropertyEdit = (props: any) => {
       <TabbedForm>
         <FormTab label="Address">
           <TextInput source="address"/>
-          <MyMapbox/>
+          <MyMapbox record={props.record}/>
         </FormTab>
         <FormTab label="Fixtures">
           <ReferenceManyField reference="fixtures" target={`${props.basePath}/${props.id}/fixtures`} >
@@ -85,7 +85,7 @@ const PropertyFilter = (props: any) => (
 const AddFixtureButton = ({ classes, record }: any) => (
   <Button
     component={Link}
-    to={`/fixtures/create`}
+    to={`/fixtures/create?propertyId=${record.id}`}
     label="Add"
   />
 );
@@ -93,7 +93,7 @@ const AddFixtureButton = ({ classes, record }: any) => (
 const AddDocumentButton = ({ classes, record }: any) => (
   <Button
     component={Link}
-    to={`/documents/create`}
+    to={`/documents/create?propertyId=${record.id}`}
     label="Add"
   />
 );

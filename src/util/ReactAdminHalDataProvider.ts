@@ -89,7 +89,7 @@ export default async (token: string) => {
         console.log(params);
         body = new FormData();
         body.append("file", params.data.picture.rawFile);
-        body.append("propertyId", params.data.property.id);
+        body.append("propertyId", params.data.propertyId);
         body.append("name", params.data.name);
         body.append("description", params.data.description);
       } else {

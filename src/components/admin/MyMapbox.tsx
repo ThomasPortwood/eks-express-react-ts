@@ -39,7 +39,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function MyMapbox(props: any) {
+interface input {
+  record: any
+}
+
+export default function MyMapbox(props: input) {
 
   const classes = useStyles();
 
@@ -57,25 +61,28 @@ export default function MyMapbox(props: any) {
     zIndex: -1
   });
 
-  const layers: any = [
-    new ScatterplotLayer({
-      data: [props.record],
-      getFillColor: [255, 140, 0],
-      getPosition: (d: any) => [d.location.longitude, d.location.latitude],
-      id: 'scatterplot-layer',
-      filled: true,
-      opacity: 1.0,
-      radiusScale: 6,
-      radiusMinPixels: 10,
-      radiusMaxPixels: 100,
-      lineWidthMinPixels: 1,
-      stroked: true
-    })
-  ];
+  const layers: any = [];
+
+  if (props.record) {
+    layers.push(
+      new ScatterplotLayer({
+        data: [props.record],
+        getFillColor: [255, 140, 0],
+        getPosition: (d: any) => [d.location.longitude, d.location.latitude],
+        id: 'scatterplot-layer',
+        filled: true,
+        opacity: 1.0,
+        radiusScale: 6,
+        radiusMinPixels: 10,
+        radiusMaxPixels: 100,
+        lineWidthMinPixels: 1,
+        stroked: true
+      })
+    )
+  }
 
   return (
     <div className={classes.root}>
-
       <ReactMapGL
         {...viewport}
         mapboxApiAccessToken={mapboxApiAccessToken}
@@ -85,11 +92,8 @@ export default function MyMapbox(props: any) {
           width: viewport.width === 0 ? "100%" : viewport.width,
           height: viewport.height === 0 ? "100%" : viewport.height,
         })}>
-
         <DeckGL viewState={viewport} layers={layers} />
-
       </ReactMapGL>
-
     </div>
   );
 }

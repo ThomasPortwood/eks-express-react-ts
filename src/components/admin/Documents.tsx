@@ -4,36 +4,19 @@ import React from 'react';
 // @ts-ignore
 import {Create, Datagrid, DateField, Edit, EditButton, Filter, List, ReferenceField, ReferenceInput, SelectInput, SimpleForm, TextField, TextInput, ImageInput, ImageField} from 'react-admin';
 import { Typography } from '@material-ui/core';
+import {parse} from "query-string";
 
 const DocumentTitle = ({record}: any) => {
   return <span>Document {record ? `"${record.name}"` : ''}</span>;
 };
 
-export const DocumentList = (props: any) => (
-  <List filters={<DocumentFilter/>} {...props}>
-    <Datagrid rowClick="edit">
-      <DateField source="createdAt" label="Created" showTime/>
-      <ReferenceField label="Property" source="propertyId" reference="properties">
-        <TextField source="name"/>
-      </ReferenceField>
-      <TextField source="name"/>
-      <TextField source="attributes"/>
-      <EditButton/>
-    </Datagrid>
-  </List>
-);
-
 export const DocumentCreate = (props: any) => {
-
-
-  console.log(props);
-
+  const { propertyId } = parse(props.location.search);
+  const redirect = propertyId ? `/properties/${propertyId}/2` : false;
   return (
     <Create {...props}>
-      <SimpleForm initialValues={{property_id: 1}}>
-        <ReferenceInput label="Property" source="property.id" reference="properties">
-          <SelectInput optionText="name"/>
-        </ReferenceInput>
+      <SimpleForm redirect={redirect}>
+        <TextInput source="propertyId" initialValue={propertyId} disabled/>
         <TextInput source="name"/>
         <TextInput source="description"/>
         <ImageInput source="picture" label="Picture" accept="image/*" multiple={false}>
