@@ -4,7 +4,6 @@ import React from 'react';
 // @ts-ignore
 import {Button, Create, Datagrid, DeleteButton, Edit, EditButton, Filter, ReferenceInput, ReferenceManyField, SelectInput, SimpleForm, TabbedForm, FormTab, TextField, TextInput} from 'react-admin';
 
-
 import MyMapbox from "./MyMapbox";
 import {Link} from "react-router-dom";
 import {parse} from "query-string";
@@ -84,6 +83,7 @@ const PropertyFilter = (props: any) => (
 
 const AddFixtureButton = ({ classes, record }: any) => (
   <Button
+    variant="contained"
     component={Link}
     to={`/fixtures/create?propertyId=${record.id}`}
     label="Add"
@@ -92,6 +92,7 @@ const AddFixtureButton = ({ classes, record }: any) => (
 
 const AddDocumentButton = ({ classes, record }: any) => (
   <Button
+    variant="contained"
     component={Link}
     to={`/documents/create?propertyId=${record.id}`}
     label="Add"

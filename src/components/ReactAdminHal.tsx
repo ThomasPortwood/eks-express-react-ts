@@ -6,7 +6,7 @@ import {useAuth0} from "../contexts/auth0-context";
 // https://marmelab.com/react-admin/Tutorial.html
 // https://github.com/marmelab/react-admin/issues/4505
 // @ts-ignore
-import {Admin, Resource} from 'react-admin';
+import {Admin, Datagrid, List, Resource, TextField} from 'react-admin';
 // mine
 import {PropertyCreate, PropertyEdit} from "./admin/Properties";
 import Overview from "./admin/Overview";
@@ -17,6 +17,7 @@ import {ClubCreate, ClubEdit, ClubList} from "./admin/Clubs";
 import {ClubMemberCreate} from "./admin/ClubMembers";
 import {DocumentCreate, DocumentEdit} from "./admin/Documents";
 import {FixtureCreate, FixtureEdit} from "./admin/Fixtures";
+import MyLayout from "./admin/MyLayout";
 
 
 export const ReactAdminHal = () => {
@@ -76,14 +77,17 @@ export const ReactAdminHal = () => {
       {reactAdminAuthProvider && reactAdminDataProvider && (
         <Admin
           authProvider={reactAdminAuthProvider}
-          logOutButton={MyLogoutButton}
+          logoutButton={MyLogoutButton}
           dashboard={Overview}
           dataProvider={reactAdminDataProvider}
+          layout={MyLayout}
         >
-          <Resource name="members" options={{ label: 'Users' }} list={MemberList}/>
+          <Resource name="members" list={MemberList}/>
           <Resource name="clubs" list={ClubList} create={ClubCreate} edit={ClubEdit}/>
           <Resource name="clubMembers" create={ClubMemberCreate}/>
-          <Resource name="properties" create={PropertyCreate} edit={PropertyEdit}/>
+          <Resource name="organizations"/>
+          <Resource name="organizationMembers"/>
+          <Resource name="properties" list={MyList} create={PropertyCreate} edit={PropertyEdit}/>
           <Resource name="fixtures" create={FixtureCreate} edit={FixtureEdit}/>
           <Resource name="documents" create={DocumentCreate} edit={DocumentEdit}/>
         </Admin>
@@ -91,3 +95,15 @@ export const ReactAdminHal = () => {
     </div>
   )
 };
+
+const MyList = (props: any) => {
+
+  return (
+    <List {...props}>
+      <Datagrid>
+        <TextField source="name"/>
+      </Datagrid>
+    </List>
+  )
+
+}

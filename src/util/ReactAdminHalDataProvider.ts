@@ -30,7 +30,6 @@ export default async (token: string) => {
 
       // TODO: query-string
       if (params.filter.name) url += `/search/findByNameContains?input=${params.filter.name ?? ""}`;
-      if (resource === 'clubs') url += '?projection=clubMembers';
 
       return myFetchJson(url).then(({headers, json}: any) => {
 

@@ -79,6 +79,7 @@ export const ClubEdit = (props: any) => {
 const AddClubMemberButton = ({ classes, record }: any) => {
   return (
     <Button
+      variant="contained"
       component={Link}
       to={`/clubMembers/create?clubId=${record.id}`}
       label="Add"
@@ -88,6 +89,7 @@ const AddClubMemberButton = ({ classes, record }: any) => {
 
 const AddPropertyButton = ({ classes, record }: any) => (
   <Button
+    variant="contained"
     component={Link}
     to={`/properties/create?clubId=${record.id}`}
     label="Add"
