@@ -28,7 +28,7 @@ export default () => {
 
   useEffect(() => {
 
-    dataProvider.getList('properties', {filter: {}})
+    dataProvider.getList('properties', {filter: {}, sort: {field: "updatedAt", order: "desc"}})
       .then(({data}: any) => {
         setProperties(data);
       })
@@ -46,7 +46,7 @@ export default () => {
 
       <Grid container spacing={2} justify="center">
 
-        <Grid item md={5} xs='auto' spacing={2}>
+        <Grid item md={5} xs='auto'>
           <OverviewProfile/>
         </Grid>
 

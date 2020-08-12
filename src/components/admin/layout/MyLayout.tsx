@@ -6,8 +6,8 @@ import {createMuiTheme, makeStyles, Theme} from '@material-ui/core/styles';
 import {ThemeProvider} from '@material-ui/styles';
 //@ts-ignore
 import {ComponentPropType, Notification,} from 'react-admin';
-import {AppBar, Button, Divider, Grid, Paper, Tab, Tabs, Toolbar, Typography} from "@material-ui/core";
-import {useAuth0} from "../../contexts/auth0-context";
+import {AppBar, Button, Divider, Grid, Tab, Tabs, Toolbar, Typography} from "@material-ui/core";
+import {useAuth0} from "../../../contexts/auth0-context";
 
 const baseTheme = createMuiTheme();
 
@@ -37,16 +37,12 @@ const MyLayout = ({children}: any) => {
     <ThemeProvider theme={baseTheme}>
       <div className={classes.root}>
 
-        <Paper elevation={0}>
+        <Toolbar>
+          <Typography className={classes.title}>Club Abode</Typography>
+          <Button color="inherit" onClick={() => logout({})}>Logout</Button>
+        </Toolbar>
 
-          <Toolbar>
-            <Typography className={classes.title}>Club Abode</Typography>
-            <Button color="inherit" onClick={() => logout({})}>Logout</Button>
-          </Toolbar>
-
-        </Paper>
-
-        <Grid container justify="center">
+        <Grid container justify="center" spacing={2}>
           <Grid item lg={8}>
 
             <AppBar color="transparent" position="static" elevation={0}>
@@ -66,9 +62,9 @@ const MyLayout = ({children}: any) => {
 
         <Divider light={true} className={classes.divider}/>
 
-        <div>
+        <Grid container spacing={2} justify="center">
           {children}
-        </div>
+        </Grid>
 
         <Notification/>
       </div>

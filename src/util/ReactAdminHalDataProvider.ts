@@ -7,16 +7,40 @@ import {stringify} from "query-string";
 
 const baseUrl = process.env.REACT_APP_HAL_ENDPOINT;
 
+const buildUrl = (resource: string, params: any = {}) => {
+
+  let url = `${baseUrl}/${resource}`;
+
+  let queryString = "";
+
+  if (params.filter.name) {
+    url += `/search/findByNameContains`;
+    const query = {input: params.filter.name};
+    queryString += stringify(query);
+  }
+
+  if (params.pagination) {
+    const {page, perPage} = params.pagination;
+    const query = {page: page, size: perPage};
+    queryString += stringify(query);
+  }
+
+  if (params.sort) {
+    const {field, order} = params.sort;
+    const query = {sort: `${field},${order}`};
+    queryString += stringify(query);
+  }
+
+  return `${url}?${queryString}`;
+};
+
 export default async (token: string) => {
 
   const myFetchJson = (url: string, options: any = {}) => {
-
     if (!options.headers) {
       options.headers = new Headers({});
     }
-
     options.headers.set('Authorization', `Bearer ${token}`);
-
     return fetchUtils.fetchJson(url, options);
   };
 
@@ -26,10 +50,9 @@ export default async (token: string) => {
 
       console.log(`GET LIST ${resource}`);
 
-      let url = `${baseUrl}/${resource}`;
+      let url = buildUrl(resource, params);
 
-      // TODO: query-string
-      if (params.filter.name) url += `/search/findByNameContains?input=${params.filter.name ?? ""}`;
+      console.log(url);
 
       return myFetchJson(url).then(({headers, json}: any) => {
 
@@ -54,10 +77,13 @@ export default async (token: string) => {
 
       console.log(`GET MANY ${resource}`);
 
-      // TODO: implement id filter in the backend
-      // const query = {
-      //   filter: JSON.stringify({id: params.ids}),
-      // };
+      const {page, perPage} = params.pagination;
+      // const { field, order } = params.sort;
+      const query = {
+        // sort: JSON.stringify([field, order]),
+        page: page,
+        size: perPage
+      };
 
       const url = `${baseUrl}/${resource}`;
       return myFetchJson(url).then(({json}: any) => ({data: json._embedded[resource]}));
@@ -65,11 +91,11 @@ export default async (token: string) => {
 
     getManyReference: (resource: string, params: any) => {
       console.log(`GET MANY REF ${resource}`);
-      const { page, perPage } = params.pagination;
-      // const { field, order } = params.sort;
+      const {page, perPage} = params.pagination;
+      const {field, order} = params.sort;
       const query = {
-        // sort: JSON.stringify([field, order]),
-        page,
+        sort: JSON.stringify([field, order]),
+        page: page,
         size: perPage
       };
       const url = `${baseUrl}${params.target}?${stringify(query)}`;
@@ -104,7 +130,9 @@ export default async (token: string) => {
     delete: (resource: string, params: any = {}) => {
       console.log(`DELETE ${resource}`);
       const url = `${baseUrl}/${resource}/${params.id}`;
-      return myFetchJson(url, {method: "DELETE"}).then(() => {return {data: {}};})
+      return myFetchJson(url, {method: "DELETE"}).then(() => {
+        return {data: {}};
+      })
     },
 
     deleteMany: (resource: string, params: any = {}) => {

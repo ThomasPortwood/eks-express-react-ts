@@ -1,4 +1,4 @@
-import {useAuth0} from "../../contexts/auth0-context";
+import {useAuth0} from "../../../contexts/auth0-context";
 import {Grid, Typography} from "@material-ui/core";
 import * as React from "react";
 

@@ -4,7 +4,7 @@ import React from 'react';
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 // mine
 import './App.css';
-import {ReactAdminHal} from "./components/ReactAdminHal";
+import {ReactAdminHal} from "./components/admin/ReactAdminHal";
 import MyVoyager from "./components/MyVoyager";
 
 function App() {

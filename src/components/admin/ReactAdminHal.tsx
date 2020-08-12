@@ -1,22 +1,22 @@
 // https://reactjs.org/docs/hooks-intro.html
 import React, {useEffect, useState} from 'react';
 // https://auth0.com/docs/quickstart/spa/react
-import {useAuth0} from "../contexts/auth0-context";
+import {useAuth0} from "../../contexts/auth0-context";
 // https://www.apollographql.com/docs/react/get-started/
 // https://marmelab.com/react-admin/Tutorial.html
 // https://github.com/marmelab/react-admin/issues/4505
 // @ts-ignore
 import {Admin, Datagrid, List, Resource, TextField} from 'react-admin';
 // mine
-import {PropertyCreate, PropertyEdit} from "./admin/Properties";
-import Overview from "./admin/Overview";
-import createReactAdminHalDataProvider from "../util/ReactAdminHalDataProvider";
-import {MemberList} from "./admin/Members";
-import {ClubCreate, ClubEdit, ClubList} from "./admin/Clubs";
-import {ClubMemberCreate} from "./admin/ClubMembers";
-import {DocumentCreate, DocumentEdit} from "./admin/Documents";
-import {FixtureCreate, FixtureEdit} from "./admin/Fixtures";
-import MyLayout from "./admin/MyLayout";
+import {PropertyCreate, PropertyEdit} from "./Properties";
+import Overview from "./overview/Overview";
+import createReactAdminHalDataProvider from "../../util/ReactAdminHalDataProvider";
+import {MemberList} from "./Members";
+import {ClubCreate, ClubEdit, ClubList} from "./Clubs";
+import {ClubMemberCreate} from "./ClubMembers";
+import {DocumentCreate, DocumentEdit} from "./Documents";
+import {FixtureCreate, FixtureEdit} from "./Fixtures";
+import MyLayout from "./layout/MyLayout";
 
 
 export const ReactAdminHal = () => {
