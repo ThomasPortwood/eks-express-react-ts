@@ -18,7 +18,7 @@ export const PropertyCreate = (props: any) => {
   return (
     <Create {...props}>
       <SimpleForm redirect={redirect}>
-        <TextInput source="clubId" initialValue={clubId} disabled/>
+        {/*<TextInput source="clubId" initialValue={clubId} disabled/>*/}
         <TextInput source="name"/>
         <TextInput source="address"/>
         <TextInput source="attributes" initialValue="{}"/>

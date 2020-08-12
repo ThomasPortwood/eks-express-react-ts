@@ -6,14 +6,14 @@ import {createMuiTheme, makeStyles, Theme} from '@material-ui/core/styles';
 import {ThemeProvider} from '@material-ui/styles';
 //@ts-ignore
 import {ComponentPropType, Notification,} from 'react-admin';
-import {AppBar, Box, Button, Divider, Paper, Tab, Tabs, Toolbar, Typography} from "@material-ui/core";
+import {AppBar, Button, Divider, Grid, Paper, Tab, Tabs, Toolbar, Typography} from "@material-ui/core";
 import {useAuth0} from "../../contexts/auth0-context";
 
 const baseTheme = createMuiTheme();
 
 const useStyles = makeStyles((theme: Theme) => ({
   divider: {
-    marginBottom: 10
+    marginBottom: 15
   },
   root: {
     flexGrow: 1,
@@ -23,19 +23,13 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: any;
-  value: any;
-}
-
 const MyLayout = ({children}: any) => {
 
   const history = useHistory();
   const classes = useStyles();
   const {logout} = useAuth0();
 
-  const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
+  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) => {
     history.push(newValue);
   };
 
@@ -52,16 +46,23 @@ const MyLayout = ({children}: any) => {
 
         </Paper>
 
-        <AppBar color="transparent" position="static" elevation={0}>
+        <Grid container justify="center">
+          <Grid item lg={8}>
 
-          <Toolbar>
-            <Tabs value={history.location.pathname} onChange={handleChange} className={classes.title}>
-              <Tab label="Overview" value="/"/>
-              <Tab label="Organizations" value="/organizations"/>
-            </Tabs>
-          </Toolbar>
+            <AppBar color="transparent" position="static" elevation={0}>
 
-        </AppBar>
+              <Toolbar>
+                <Tabs value={history.location.pathname} onChange={handleTabChange} className={classes.title}>
+                  <Tab label="Overview" value="/"/>
+                  <Tab label="Organizations" value="/organizations"/>
+                  <Tab label="Access Control" value="/clubs"/>
+                </Tabs>
+              </Toolbar>
+
+            </AppBar>
+
+          </Grid>
+        </Grid>
 
         <Divider light={true} className={classes.divider}/>
 

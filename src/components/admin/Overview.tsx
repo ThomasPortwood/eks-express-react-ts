@@ -1,11 +1,12 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
-import {createStyles, Grid, Paper, Theme} from '@material-ui/core';
+import {useHistory} from 'react-router-dom';
+import {Button, createStyles, Grid, Paper, Theme} from '@material-ui/core';
 import {makeStyles} from "@material-ui/core/styles";
 //@ts-ignore
 import {Error, useDataProvider} from 'react-admin';
 import {PropertyCard} from "./PropertyCard";
-import {Profile} from "./OverviewProfile";
+import {OverviewProfile} from "./OverviewProfile";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -19,8 +20,11 @@ export default () => {
 
   const classes = useStyles();
   const dataProvider = useDataProvider();
+  const history = useHistory();
   const [properties, setProperties] = useState<any []>([]);
   const [error, setError] = useState();
+
+  const debugOutlineElevation = 3;
 
   useEffect(() => {
 
@@ -42,19 +46,20 @@ export default () => {
 
       <Grid container spacing={2} justify="center">
 
-        <Grid item xs={5}>
-          <Grid container spacing={2}>
-            <Grid item xs={5} spacing={2}>
-              <Profile/>
-            </Grid>
-          </Grid>
+        <Grid item lg='auto' xs='auto' spacing={2}>
+          <Paper elevation={debugOutlineElevation}>
+            <OverviewProfile/>
+          </Paper>
         </Grid>
 
         <Grid item xs={3}>
           <Grid container spacing={2} justify="center">
             <Grid item xs={5}>
-              <Paper elevation={5}>
-                Add Something
+              <Paper elevation={debugOutlineElevation}>
+                <Button
+                  variant='outlined'
+                  onClick={() => history.push('/properties/create')}>New Property
+                </Button>
               </Paper>
             </Grid>
           </Grid>
@@ -62,9 +67,10 @@ export default () => {
 
       </Grid>
 
-      <Grid container className={classes.root} spacing={2} justify="center">
 
-        <Grid item xs={5}>
+      <Grid container spacing={2} justify="center">
+
+        <Grid item xs='auto'>
 
           <Grid container spacing={2} justify="center">
 
@@ -89,7 +95,5 @@ export default () => {
   )
 };
 
-interface ProfileProps {
-  user: any
-}
+
 
