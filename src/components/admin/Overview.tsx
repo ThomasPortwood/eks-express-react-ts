@@ -1,7 +1,7 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
 import {useHistory} from 'react-router-dom';
-import {Button, createStyles, Grid, Paper, Theme} from '@material-ui/core';
+import {Button, createStyles, Grid, Theme} from '@material-ui/core';
 import {makeStyles} from "@material-ui/core/styles";
 //@ts-ignore
 import {Error, useDataProvider} from 'react-admin';
@@ -24,7 +24,7 @@ export default () => {
   const [properties, setProperties] = useState<any []>([]);
   const [error, setError] = useState();
 
-  const debugOutlineElevation = 0;
+  const debugBorder = 1;
 
   useEffect(() => {
 
@@ -46,48 +46,33 @@ export default () => {
 
       <Grid container spacing={2} justify="center">
 
-        <Grid item lg='auto' xs='auto' spacing={2}>
-          <Paper elevation={debugOutlineElevation}>
-            <OverviewProfile/>
-          </Paper>
+        <Grid item md={5} xs='auto' spacing={2}>
+          <OverviewProfile/>
         </Grid>
 
-        <Grid item xs={3}>
-          <Grid container spacing={2} justify="center">
-            <Grid item xs={5}>
-              <Paper elevation={debugOutlineElevation}>
-                <Button
-                  variant='outlined'
-                  onClick={() => history.push('/properties/create')}>New Property
-                </Button>
-              </Paper>
-            </Grid>
-          </Grid>
+        <Grid item xs='auto'>
+          <Button
+            variant='outlined'
+            onClick={() => history.push('/properties/create')}>New Property
+          </Button>
         </Grid>
 
       </Grid>
 
-
       <Grid container spacing={2} justify="center">
 
-        <Grid item xs='auto'>
-
+        <Grid item md={5} xs='auto'>
           <Grid container spacing={2} justify="center">
-
             {properties.map(p => (
               <Grid key={p.id} item>
                 <PropertyCard property={p}/>
               </Grid>
             ))}
-
           </Grid>
-
         </Grid>
 
-        <Grid item xs={3}>
-          <Paper elevation={0}>
-            Recent Activity (coming soon)
-          </Paper>
+        <Grid item xs='auto'>
+          Recent Activity (coming soon)
         </Grid>
 
       </Grid>

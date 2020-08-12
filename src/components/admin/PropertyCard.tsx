@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: theme.spacing(1),
     },
     propertyCard: {
-      minWidth: 600
+      minWidth: 400
     },
     propertyCardTitle: {
       fontSize: 12
