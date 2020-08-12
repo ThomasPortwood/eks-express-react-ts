@@ -24,7 +24,7 @@ export default () => {
   const [properties, setProperties] = useState<any []>([]);
   const [error, setError] = useState();
 
-  const debugOutlineElevation = 3;
+  const debugOutlineElevation = 0;
 
   useEffect(() => {
 

@@ -10,7 +10,6 @@ import {Admin, Datagrid, List, Resource, TextField} from 'react-admin';
 // mine
 import {PropertyCreate, PropertyEdit} from "./admin/Properties";
 import Overview from "./admin/Overview";
-import {MyLogoutButton} from "./admin/MyLogoutButton";
 import createReactAdminHalDataProvider from "../util/ReactAdminHalDataProvider";
 import {MemberList} from "./admin/Members";
 import {ClubCreate, ClubEdit, ClubList} from "./admin/Clubs";
@@ -77,7 +76,6 @@ export const ReactAdminHal = () => {
       {reactAdminAuthProvider && reactAdminDataProvider && (
         <Admin
           authProvider={reactAdminAuthProvider}
-          logoutButton={MyLogoutButton}
           dashboard={Overview}
           dataProvider={reactAdminDataProvider}
           layout={MyLayout}
