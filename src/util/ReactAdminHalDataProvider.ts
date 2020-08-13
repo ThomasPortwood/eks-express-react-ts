@@ -21,7 +21,7 @@ const buildUrl = (resource: string, params: any = {}) => {
 
   if (params.pagination) {
     const {page, perPage} = params.pagination;
-    const query = {page: page, size: perPage};
+    const query = {page: 0, size: perPage};
     queryString += stringify(query);
   }
 
@@ -52,8 +52,6 @@ export default async (token: string) => {
 
       let url = buildUrl(resource, params);
 
-      console.log(url);
-
       return myFetchJson(url).then(({headers, json}: any) => {
 
         const total = json.page ? json.page.totalElements : json._embedded[resource].length;
@@ -77,13 +75,13 @@ export default async (token: string) => {
 
       console.log(`GET MANY ${resource}`);
 
-      const {page, perPage} = params.pagination;
-      // const { field, order } = params.sort;
-      const query = {
-        // sort: JSON.stringify([field, order]),
-        page: page,
-        size: perPage
-      };
+      // const {page, perPage} = params.pagination;
+      // // const { field, order } = params.sort;
+      // const query = {
+      //   // sort: JSON.stringify([field, order]),
+      //   page: page,
+      //   size: perPage
+      // };
 
       const url = `${baseUrl}/${resource}`;
       return myFetchJson(url).then(({json}: any) => ({data: json._embedded[resource]}));

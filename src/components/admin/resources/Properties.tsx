@@ -4,7 +4,7 @@ import React from 'react';
 // @ts-ignore
 import {Button, Create, Datagrid, DeleteButton, Edit, EditButton, Filter, ReferenceInput, ReferenceManyField, SelectInput, SimpleForm, TabbedForm, FormTab, TextField, TextInput} from 'react-admin';
 
-import MyMapbox from "./MyMapbox";
+import MyMapbox from "../MyMapbox";
 import {Link} from "react-router-dom";
 import {parse} from "query-string";
 

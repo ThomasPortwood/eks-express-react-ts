@@ -8,15 +8,17 @@ import {useAuth0} from "../../contexts/auth0-context";
 // @ts-ignore
 import {Admin, Datagrid, List, Resource, TextField} from 'react-admin';
 // mine
-import {PropertyCreate, PropertyEdit} from "./Properties";
+import {PropertyCreate, PropertyEdit} from "./resources/Properties";
 import Overview from "./overview/Overview";
 import createReactAdminHalDataProvider from "../../util/ReactAdminHalDataProvider";
-import {MemberList} from "./Members";
-import {ClubCreate, ClubEdit, ClubList} from "./Clubs";
-import {ClubMemberCreate} from "./ClubMembers";
-import {DocumentCreate, DocumentEdit} from "./Documents";
-import {FixtureCreate, FixtureEdit} from "./Fixtures";
+import {MemberList} from "./resources/Members";
+import {ClubCreate, ClubEdit, ClubList} from "./resources/Clubs";
+import {ClubMemberCreate} from "./resources/ClubMembers";
+import {DocumentCreate, DocumentEdit} from "./resources/Documents";
+import {FixtureCreate, FixtureEdit} from "./resources/Fixtures";
 import MyLayout from "./layout/MyLayout";
+import {OrganizationCreate, OrganizationEdit, OrganizationList} from "./resources/Organizations";
+import {OrganizationMemberCreate} from "./resources/OrganizationMembers";
 
 
 export const ReactAdminHal = () => {
@@ -83,8 +85,8 @@ export const ReactAdminHal = () => {
           <Resource name="members" list={MemberList}/>
           <Resource name="clubs" list={ClubList} create={ClubCreate} edit={ClubEdit}/>
           <Resource name="clubMembers" create={ClubMemberCreate}/>
-          <Resource name="organizations"/>
-          <Resource name="organizationMembers"/>
+          <Resource name="organizations" list={OrganizationList} create={OrganizationCreate} edit={OrganizationEdit}/>
+          <Resource name="organizationMembers" create={OrganizationMemberCreate}/>
           <Resource name="properties" list={MyList} create={PropertyCreate} edit={PropertyEdit}/>
           <Resource name="fixtures" create={FixtureCreate} edit={FixtureEdit}/>
           <Resource name="documents" create={DocumentCreate} edit={DocumentEdit}/>

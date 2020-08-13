@@ -5,15 +5,14 @@ import React from 'react';
 import {Button, Create, Datagrid, DeleteButton, Edit, EditButton, List, ReferenceField, ReferenceInput, SelectInput, SimpleForm, TabbedForm, FormTab, ReferenceManyField, TextField, TextInput} from 'react-admin';
 import { Link } from 'react-router-dom';
 
-const ClubTitle = ({record}: any) => {
-  return <span>Club {record ? `"${record.name}"` : ''}</span>;
+const OrganizationTitle = ({record}: any) => {
+  return <span>Organization {record ? `"${record.name}"` : ''}</span>;
 };
 
-export const ClubList = (props: any) => (
+export const OrganizationList = (props: any) => (
   <List {...props}>
     <Datagrid rowClick="edit">
       <TextField source="name"/>
-      <TextField source="description"/>
       <ReferenceField label="Owner" source="ownerId" reference="members">
         <TextField source="name"/>
       </ReferenceField>
@@ -22,76 +21,50 @@ export const ClubList = (props: any) => (
   </List>
 );
 
-export const ClubCreate = (props: any) => (
+export const OrganizationCreate = (props: any) => (
   <Create {...props}>
     <SimpleForm>
       <TextInput source="name"/>
-      <TextInput source="description"/>
       <TextInput source="attributes" initialValue="{}"/>
     </SimpleForm>
   </Create>
 );
 
-export const ClubEdit = (props: any) => {
-  const deleteRedirect = props.id ? `/clubs/${props.id}` : "/clubs";
+export const OrganizationEdit = (props: any) => {
+  const deleteRedirect = props.id ? `/organizations/${props.id}` : "/organizations";
   return (
-    <Edit title={<ClubTitle/>} {...props}>
+    <Edit title={<OrganizationTitle/>} {...props}>
       <TabbedForm redirect={false}>
         <FormTab label="Members">
-          <ReferenceManyField reference="clubMembers" target={`${props.basePath}/${props.id}/clubMembers`} >
+          <ReferenceManyField reference="organizationMembers" target={`${props.basePath}/${props.id}/organizationMembers`} >
             <Datagrid>
               <ReferenceField source="memberId" reference="members">
                 <TextField source="name"/>
               </ReferenceField>
               <TextField label="Permission"/>
-              <EditButton/>
               <DeleteButton label="Remove" redirect={deleteRedirect}/>
             </Datagrid>
           </ReferenceManyField>
-          <AddClubMemberButton/>
-        </FormTab>
-        <FormTab label="Properties">
-          <ReferenceManyField reference="properties" target={`${props.basePath}/${props.id}/properties`} >
-            <Datagrid rowClick="edit">
-              <ReferenceField label="Owner" source="ownerId" reference="members">
-                <TextField source="name"/>
-              </ReferenceField>
-              <TextField source="name"/>
-              <TextField source="address"/>
-              <EditButton/>
-              <DeleteButton redirect={deleteRedirect}/>
-            </Datagrid>
-          </ReferenceManyField>
-          <AddPropertyButton />
+          <AddOrganizationMemberButton/>
         </FormTab>
         <FormTab label="Settings">
           <ReferenceInput label="Owner" source="ownerId" reference="members">
             <SelectInput optionText="name"/>
           </ReferenceInput>
           <TextInput source="name"/>
-          <TextInput source="description"/>
         </FormTab>
       </TabbedForm>
     </Edit>
   )
 };
 
-const AddClubMemberButton = ({ classes, record }: any) => {
+const AddOrganizationMemberButton = ({ classes, record }: any) => {
   return (
     <Button
       variant="contained"
       component={Link}
-      to={`/clubMembers/create?clubId=${record.id}`}
+      to={`/organizationMembers/create?organizationId=${record.id}`}
       label="Add"
     />
   )
 };
-
-const AddPropertyButton = ({ classes, record }: any) => (
-  <Button
-    variant="contained"
-    component={Link}
-    to={`/properties/create?clubId=${record.id}`}
-    label="Add"
-  />
-);
