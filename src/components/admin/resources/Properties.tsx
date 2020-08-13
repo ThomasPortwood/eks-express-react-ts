@@ -15,7 +15,6 @@ const PropertyTitle = ({record}: any) => {
 export const PropertyList = (props: any) => (
   <List filters={<PropertyFilter/>} {...props}>
     <Datagrid rowClick="edit">
-      <TextField source="address"/>
       <TextField source="name"/>
       <ReferenceField label="Owner" source="ownerId" reference="members">
         <TextField source="name"/>

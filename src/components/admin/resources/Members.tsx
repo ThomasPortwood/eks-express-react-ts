@@ -25,8 +25,6 @@ export const MemberList = (props: any) => (
   <List {...props} filters={<MemberFilter/>} bulkActionButtons={<PostBulkActionButtons />}>
     <Datagrid>
       <TextField source="name"/>
-      <TextField source="email"/>
-      <TextField source="provider"/>
       <DateField label="Member Since" source="createdAt" showTime/>
     </Datagrid>
   </List>
@@ -34,6 +32,6 @@ export const MemberList = (props: any) => (
 
 const MemberFilter = (props: any) => (
   <Filter {...props}>
-    <TextInput label="Search" source="name" alwaysOn/>
+    <TextInput label="Name/Email" source="name" alwaysOn/>
   </Filter>
 );

@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 //@ts-ignore
 import {makeStyles, Theme, ThemeProvider} from '@material-ui/core/styles';
 //@ts-ignore
-import {ComponentPropType, Notification,} from 'react-admin';
-import {AppBar, Button, Divider, Grid, Tab, Tabs, Toolbar, Typography} from "@material-ui/core";
+import {Notification,} from 'react-admin';
+import {Button, Divider, Grid, Tab, Tabs, Toolbar, Typography} from "@material-ui/core";
 import {useAuth0} from "../../../contexts/auth0-context";
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -36,28 +36,28 @@ const MyLayout = ({children, theme}: any) => {
 
         <Grid container justify="center" spacing={2}>
 
-          <Grid item xs={8}>
+          <Grid item xs={10}>
             <Toolbar>
               <Typography className={classes.title}>Club Abode</Typography>
               <Button variant="outlined" color="inherit" onClick={() => logout({})}>Logout</Button>
             </Toolbar>
           </Grid>
 
-          <Grid item xs={8}>
-            <AppBar color="transparent" position="static" elevation={0}>
-              <Toolbar>
-                <Tabs value={history.location.pathname} onChange={handleTabChange} className={classes.title}>
-                  <Tab label="Overview" value="/"/>
-                  <Tab label="People" value="/members"/>
-                  <Tab label="Properties" value="/properties"/>
-                  <Tab label="Organizations" value="/organizations"/>
-                </Tabs>
-              </Toolbar>
-            </AppBar>
-            <Divider light={true} className={classes.divider}/>
+          <Grid item xs={10}>
+            <Tabs
+              centered
+              value={history.location.pathname}
+              onChange={handleTabChange}
+              className={classes.title}>
+              <Tab label="Overview" value="/"/>
+              <Tab label="Properties" value="/properties"/>
+              <Tab label="People" value="/members"/>
+              <Tab label="Organizations" value="/organizations"/>
+            </Tabs>
+            <Divider light={true}/>
           </Grid>
 
-          <Grid item xs={8}>
+          <Grid item xs={10}>
             {children}
           </Grid>
 
