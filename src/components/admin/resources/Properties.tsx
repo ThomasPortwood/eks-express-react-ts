@@ -71,7 +71,7 @@ export const PropertyEdit = (props: any) => {
         <FormTab label="Settings">
           <ReferenceInput
             label="Owner"
-            source="memberId"
+            source="ownerId"
             reference="members">
             <AutocompleteInput optionText="name"/>
           </ReferenceInput>
