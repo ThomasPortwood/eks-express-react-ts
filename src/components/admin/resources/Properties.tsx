@@ -2,7 +2,7 @@ import React from 'react';
 // https://marmelab.com/react-admin/Tutorial.html
 // https://github.com/marmelab/react-admin/issues/4505
 // @ts-ignore
-import {Button, Create, Datagrid, DeleteButton, Edit, EditButton, Filter, List, ReferenceField, ReferenceInput, ReferenceManyField, SelectInput, SimpleForm, TabbedForm, FormTab, TextField, TextInput} from 'react-admin';
+import {AutocompleteInput, Button, Create, Datagrid, DeleteButton, Edit, EditButton, Filter, List, ReferenceField, ReferenceInput, ReferenceManyField, SelectInput, SimpleForm, TabbedForm, FormTab, TextField, TextInput} from 'react-admin';
 
 import MyMapbox from "../MyMapbox";
 import {Link} from "react-router-dom";
@@ -69,11 +69,17 @@ export const PropertyEdit = (props: any) => {
           <AddDocumentButton/>
         </FormTab>
         <FormTab label="Settings">
-          <ReferenceInput label="Owner" source="ownerId" reference="members">
-            <SelectInput optionText="name"/>
+          <ReferenceInput
+            label="Owner"
+            source="memberId"
+            reference="members">
+            <AutocompleteInput optionText="name"/>
           </ReferenceInput>
-          <ReferenceInput label="Club" source="clubId" reference="clubs">
-            <SelectInput optionText="name"/>
+          <ReferenceInput
+            label="Club"
+            source="clubId"
+            reference="clubs">
+            <AutocompleteInput optionText="name"/>
           </ReferenceInput>
           <TextInput source="name"/>
         </FormTab>

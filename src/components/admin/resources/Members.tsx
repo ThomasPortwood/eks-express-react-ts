@@ -34,6 +34,6 @@ export const MemberList = (props: any) => (
 
 const MemberFilter = (props: any) => (
   <Filter {...props}>
-    <TextInput source="name" alwaysOn/>
+    <TextInput label="Search" source="name" alwaysOn/>
   </Filter>
 );
