@@ -1,7 +1,7 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
 import {useHistory} from 'react-router-dom';
-import {Button, createStyles, Grid, Theme} from '@material-ui/core';
+import {Box, Button, createStyles, Grid, Theme} from '@material-ui/core';
 import {makeStyles} from "@material-ui/core/styles";
 //@ts-ignore
 import {Error, useDataProvider} from 'react-admin';
@@ -47,16 +47,19 @@ export default () => {
 
       <Grid container spacing={2} justify="center" item xs={12}>
 
-        <Grid item xs={6}>
-          <OverviewProfile/>
-        </Grid>
 
-        <Grid item xs='auto'>
-          <Button
-            variant='outlined'
-            onClick={() => history.push('/properties/create')}>New Property
-          </Button>
-        </Grid>
+
+          <Grid item xs={6}>
+            <OverviewProfile/>
+          </Grid>
+
+          <Grid item xs='auto'>
+            <Button
+              variant='outlined'
+              onClick={() => history.push('/properties/create')}>New Property
+            </Button>
+          </Grid>
+
 
       </Grid>
 

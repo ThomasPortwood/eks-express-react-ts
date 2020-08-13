@@ -56,10 +56,10 @@ const MyLayout = ({children}: any) => {
                 </Tabs>
               </Toolbar>
             </AppBar>
+            <Divider light={true} className={classes.divider}/>
           </Grid>
 
-          <Grid item xs={8}>
-            <Divider light={true} className={classes.divider}/>
+          <Grid item xs={10}>
             {children}
           </Grid>
 

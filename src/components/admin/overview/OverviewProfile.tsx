@@ -8,10 +8,10 @@ export const OverviewProfile = () => {
 
   return (
     <Grid container spacing={2}>
-      <Grid item xs='auto'>
+      <Grid item lg='auto' xs={12}>
         <img src={user.picture} alt="Profile" width={75}/>
       </Grid>
-      <Grid item xs={8}>
+      <Grid item xs='auto'>
         <Typography variant="h4">{user.name}</Typography>
         <Typography>{user.email}</Typography>
       </Grid>
