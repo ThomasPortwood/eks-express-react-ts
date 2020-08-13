@@ -51,7 +51,7 @@ export const OrganizationEdit = (props: any) => {
                 <TextField source="name"/>
               </ReferenceField>
               <TextField label="Permission"/>
-              <DeleteButton label="Remove" redirect={deleteRedirect}/>
+              <DeleteButton redirect={deleteRedirect}/>
             </Datagrid>
           </ReferenceManyField>
           <AddOrganizationMemberButton/>
