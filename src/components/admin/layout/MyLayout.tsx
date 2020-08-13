@@ -2,14 +2,11 @@ import * as React from 'react';
 import {useHistory} from 'react-router-dom';
 import PropTypes from 'prop-types';
 //@ts-ignore
-import {createMuiTheme, makeStyles, Theme} from '@material-ui/core/styles';
-import {ThemeProvider} from '@material-ui/styles';
+import {makeStyles, Theme, ThemeProvider} from '@material-ui/core/styles';
 //@ts-ignore
 import {ComponentPropType, Notification,} from 'react-admin';
 import {AppBar, Button, Divider, Grid, Tab, Tabs, Toolbar, Typography} from "@material-ui/core";
 import {useAuth0} from "../../../contexts/auth0-context";
-
-const baseTheme = createMuiTheme();
 
 const useStyles = makeStyles((theme: Theme) => ({
   divider: {
@@ -23,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const MyLayout = ({children}: any) => {
+const MyLayout = ({children, theme}: any) => {
 
   const history = useHistory();
   const classes = useStyles();
@@ -34,7 +31,7 @@ const MyLayout = ({children}: any) => {
   };
 
   return (
-    <ThemeProvider theme={baseTheme}>
+    <ThemeProvider theme={theme}>
       <div className={classes.root}>
 
         <Grid container justify="center" spacing={2}>
@@ -51,15 +48,16 @@ const MyLayout = ({children}: any) => {
               <Toolbar>
                 <Tabs value={history.location.pathname} onChange={handleTabChange} className={classes.title}>
                   <Tab label="Overview" value="/"/>
+                  <Tab label="People" value="/members"/>
+                  <Tab label="Properties" value="/properties"/>
                   <Tab label="Organizations" value="/organizations"/>
-                  <Tab label="Access Control" value="/clubs"/>
                 </Tabs>
               </Toolbar>
             </AppBar>
             <Divider light={true} className={classes.divider}/>
           </Grid>
 
-          <Grid item xs={10}>
+          <Grid item xs={8}>
             {children}
           </Grid>
 
@@ -73,12 +71,7 @@ const MyLayout = ({children}: any) => {
 
 MyLayout.propTypes = {
   children: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
-  dashboard: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.string,
-  ]),
-  logout: ComponentPropType,
-  title: PropTypes.string.isRequired,
+  theme: PropTypes.object
 };
 
 export default MyLayout;

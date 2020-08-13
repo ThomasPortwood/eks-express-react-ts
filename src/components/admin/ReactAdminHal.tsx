@@ -6,9 +6,9 @@ import {useAuth0} from "../../contexts/auth0-context";
 // https://marmelab.com/react-admin/Tutorial.html
 // https://github.com/marmelab/react-admin/issues/4505
 // @ts-ignore
-import {Admin, Datagrid, List, Resource, TextField} from 'react-admin';
+import {Admin, Resource} from 'react-admin';
 // mine
-import {PropertyCreate, PropertyEdit} from "./resources/Properties";
+import {PropertyCreate, PropertyEdit, PropertyList} from "./resources/Properties";
 import Overview from "./overview/Overview";
 import createReactAdminHalDataProvider from "../../util/ReactAdminHalDataProvider";
 import {MemberList} from "./resources/Members";
@@ -19,33 +19,26 @@ import {FixtureCreate, FixtureEdit} from "./resources/Fixtures";
 import MyLayout from "./layout/MyLayout";
 import {OrganizationCreate, OrganizationEdit, OrganizationList} from "./resources/Organizations";
 import {OrganizationMemberCreate} from "./resources/OrganizationMembers";
+import {createMuiTheme} from "@material-ui/core/styles";
 
+// https://material-ui.com/customization/typography/
+// https://material-ui.com/customization/breakpoints/
+const myTheme = createMuiTheme();
+// myTheme.typography.h4 = {
+//   fontSize: '1.2rem',
+//   [myTheme.breakpoints.up('md')]: {
+//     fontSize: '1.8rem',
+//   },
+//   [myTheme.breakpoints.up('lg')]: {
+//     fontSize: '2.0rem',
+//   }
+// };
 
 export const ReactAdminHal = () => {
 
   const {getIdTokenClaims, getTokenSilently, isAuthenticated, isLoading, loginWithRedirect, logout} = useAuth0();
   const [reactAdminAuthProvider, setReactAdminAuthProvider] = useState<any>(null);
   const [reactAdminDataProvider, setReactAdminDataProvider] = useState<any>(null);
-
-  useEffect(() => {
-
-    /**
-     * Effect to create apollo client and react-admin data provider when authenticated
-     *
-     * https://github.com/marmelab/react-admin/issues/3340#issuecomment-530236739
-     */
-
-    if (!isAuthenticated) return;
-
-    const createApolloClientAndReactAdminDataProvider = async () => {
-      const token = await getTokenSilently();
-      const dataProvider = await createReactAdminHalDataProvider(token);
-      setReactAdminDataProvider(dataProvider);
-    };
-
-    createApolloClientAndReactAdminDataProvider();
-
-  }, [isAuthenticated, getTokenSilently]);
 
   useEffect(() => {
 
@@ -70,6 +63,26 @@ export const ReactAdminHal = () => {
 
   }, [loginWithRedirect, logout, isAuthenticated, getIdTokenClaims]);
 
+  useEffect(() => {
+
+    /**
+     * Effect to react-admin data provider when authenticated
+     *
+     * https://github.com/marmelab/react-admin/issues/3340#issuecomment-530236739
+     */
+
+    if (!isAuthenticated) return;
+
+    const createApolloClientAndReactAdminDataProvider = async () => {
+      const token = await getTokenSilently();
+      const dataProvider = await createReactAdminHalDataProvider(token);
+      setReactAdminDataProvider(dataProvider);
+    };
+
+    createApolloClientAndReactAdminDataProvider();
+
+  }, [isAuthenticated, getTokenSilently]);
+
   if (isLoading) return (<div>commencing micromanagement ...</div>);
 
   return (
@@ -81,29 +94,18 @@ export const ReactAdminHal = () => {
           dashboard={Overview}
           dataProvider={reactAdminDataProvider}
           layout={MyLayout}
+          theme={myTheme}
         >
-          <Resource name="members" list={MemberList}/>
           <Resource name="clubs" list={ClubList} create={ClubCreate} edit={ClubEdit}/>
           <Resource name="clubMembers" create={ClubMemberCreate}/>
+          <Resource name="documents" create={DocumentCreate} edit={DocumentEdit}/>
+          <Resource name="fixtures" create={FixtureCreate} edit={FixtureEdit}/>
+          <Resource name="members" list={MemberList}/>
           <Resource name="organizations" list={OrganizationList} create={OrganizationCreate} edit={OrganizationEdit}/>
           <Resource name="organizationMembers" create={OrganizationMemberCreate}/>
-          <Resource name="properties" list={MyList} create={PropertyCreate} edit={PropertyEdit}/>
-          <Resource name="fixtures" create={FixtureCreate} edit={FixtureEdit}/>
-          <Resource name="documents" create={DocumentCreate} edit={DocumentEdit}/>
+          <Resource name="properties" list={PropertyList} create={PropertyCreate} edit={PropertyEdit}/>
         </Admin>
       )}
     </div>
   )
 };
-
-const MyList = (props: any) => {
-
-  return (
-    <List {...props}>
-      <Datagrid>
-        <TextField source="name"/>
-      </Datagrid>
-    </List>
-  )
-
-}

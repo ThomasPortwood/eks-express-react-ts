@@ -2,15 +2,24 @@ import React from 'react';
 // https://marmelab.com/react-admin/Tutorial.html
 // https://github.com/marmelab/react-admin/issues/4505
 // @ts-ignore
-import {Button, Create, Datagrid, DeleteButton, Edit, EditButton, List, ReferenceField, ReferenceInput, SelectInput, SimpleForm, TabbedForm, FormTab, ReferenceManyField, TextField, TextInput} from 'react-admin';
+import {Button, Create, Datagrid, DeleteButton, Edit, EditButton, Filter, List, ReferenceField, ReferenceInput, SelectInput, SimpleForm, TabbedForm, FormTab, ReferenceManyField, TextField, TextInput} from 'react-admin';
 import { Link } from 'react-router-dom';
 
 const OrganizationTitle = ({record}: any) => {
   return <span>Organization {record ? `"${record.name}"` : ''}</span>;
 };
 
+const OrganizationFilter = (props: any) => (
+  <Filter {...props}>
+    <TextInput source="name" alwaysOn/>
+    {/*<ReferenceInput label="Property" source="property.id" reference="Property" allowEmpty>*/}
+    {/*    <SelectInput optionText="name"/>*/}
+    {/*</ReferenceInput>*/}
+  </Filter>
+);
+
 export const OrganizationList = (props: any) => (
-  <List {...props}>
+  <List filters={<OrganizationFilter/>} {...props}>
     <Datagrid rowClick="edit">
       <TextField source="name"/>
       <ReferenceField label="Owner" source="ownerId" reference="members">

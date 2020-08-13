@@ -2,8 +2,6 @@
 // @ts-ignore
 import {fetchUtils} from 'react-admin';
 import {stringify} from "query-string";
-// @ts-ignore
-// import {stringify} from 'query-string';
 
 const baseUrl = process.env.REACT_APP_HAL_ENDPOINT;
 
@@ -11,27 +9,24 @@ const buildUrl = (resource: string, params: any = {}) => {
 
   let url = `${baseUrl}/${resource}`;
 
-  let queryString = "";
+  let queryStrings = [];
 
   if (params.filter.name) {
     url += `/search/findByNameContains`;
-    const query = {input: params.filter.name};
-    queryString += stringify(query);
+    queryStrings.push(stringify({input: params.filter.name}));
   }
 
   if (params.pagination) {
     const {page, perPage} = params.pagination;
-    const query = {page: 0, size: perPage};
-    queryString += stringify(query);
+    queryStrings.push(stringify({page: 0, size: perPage}));
   }
 
   if (params.sort) {
     const {field, order} = params.sort;
-    const query = {sort: `${field},${order}`};
-    queryString += stringify(query);
+    queryStrings.push(stringify({sort: `${field},${order}`}));
   }
 
-  return `${url}?${queryString}`;
+  return `${url}?${queryStrings.join('&')}`;
 };
 
 export default async (token: string) => {
@@ -111,7 +106,7 @@ export default async (token: string) => {
       if (resource === 'documents') {
         console.log(params);
         body = new FormData();
-        body.append("file", params.data.picture.rawFile);
+        body.append("file", params.data.file.rawFile);
         body.append("propertyId", params.data.propertyId);
         body.append("name", params.data.name);
         body.append("description", params.data.description);

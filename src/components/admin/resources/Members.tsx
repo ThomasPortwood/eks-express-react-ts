@@ -24,10 +24,10 @@ const PostBulkActionButtons = (props: any) => (
 export const MemberList = (props: any) => (
   <List {...props} filters={<MemberFilter/>} bulkActionButtons={<PostBulkActionButtons />}>
     <Datagrid>
-      <DateField source="createdAt" label="Created" showTime/>
       <TextField source="name"/>
       <TextField source="email"/>
       <TextField source="provider"/>
+      <DateField label="Member Since" source="createdAt" showTime/>
     </Datagrid>
   </List>
 );

@@ -47,8 +47,6 @@ export default () => {
 
       <Grid container spacing={2} justify="center" item xs={12}>
 
-
-
           <Grid item xs={6}>
             <OverviewProfile/>
           </Grid>
@@ -59,7 +57,6 @@ export default () => {
               onClick={() => history.push('/properties/create')}>New Property
             </Button>
           </Grid>
-
 
       </Grid>
 

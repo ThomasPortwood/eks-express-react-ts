@@ -2,7 +2,7 @@ import React from 'react';
 // https://marmelab.com/react-admin/Tutorial.html
 // https://github.com/marmelab/react-admin/issues/4505
 // @ts-ignore
-import {Button, Create, Datagrid, DeleteButton, Edit, EditButton, Filter, ReferenceInput, ReferenceManyField, SelectInput, SimpleForm, TabbedForm, FormTab, TextField, TextInput} from 'react-admin';
+import {Button, Create, Datagrid, DeleteButton, Edit, EditButton, Filter, List, ReferenceField, ReferenceInput, ReferenceManyField, SelectInput, SimpleForm, TabbedForm, FormTab, TextField, TextInput} from 'react-admin';
 
 import MyMapbox from "../MyMapbox";
 import {Link} from "react-router-dom";
@@ -11,6 +11,19 @@ import {parse} from "query-string";
 const PropertyTitle = ({record}: any) => {
   return <span>Property {record ? `"${record.name}"` : ''}</span>;
 };
+
+export const PropertyList = (props: any) => (
+  <List filters={<PropertyFilter/>} {...props}>
+    <Datagrid rowClick="edit">
+      <TextField source="address"/>
+      <TextField source="name"/>
+      <ReferenceField label="Owner" source="ownerId" reference="members">
+        <TextField source="name"/>
+      </ReferenceField>
+      <EditButton/>
+    </Datagrid>
+  </List>
+);
 
 export const PropertyCreate = (props: any) => {
   const { clubId } = parse(props.location.search);
@@ -57,7 +70,7 @@ export const PropertyEdit = (props: any) => {
         </FormTab>
         <FormTab label="Settings">
           <ReferenceInput label="Owner" source="ownerId" reference="members">
-            <TextField source="name"/>
+            <SelectInput optionText="name"/>
           </ReferenceInput>
           <ReferenceInput label="Club" source="clubId" reference="clubs">
             <SelectInput optionText="name"/>
