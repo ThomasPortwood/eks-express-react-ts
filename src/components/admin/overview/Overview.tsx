@@ -60,9 +60,9 @@ export default () => {
 
       </Grid>
 
-      <Grid container spacing={5} justify="center" item xs={12}>
+      <Grid container spacing={2} justify="center" item xs={12}>
 
-        <Grid item xs='auto'>
+        <Grid item lg={8} xs='auto'>
           <Grid container spacing={2} justify="center">
             {properties.map(p => (
               <Grid key={p.id} item>
