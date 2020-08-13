@@ -5,8 +5,8 @@ import {Button, createStyles, Grid, Theme} from '@material-ui/core';
 import {makeStyles} from "@material-ui/core/styles";
 //@ts-ignore
 import {Error, useDataProvider} from 'react-admin';
-import {PropertyCard} from "./PropertyCard";
 import {OverviewProfile} from "./OverviewProfile";
+import {PropertyCard} from "./PropertyCard";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -42,11 +42,12 @@ export default () => {
   if (!properties) return null;
 
   return (
-    <div>
 
-      <Grid container spacing={2} justify="center">
+    <Grid container spacing={2} justify="center">
 
-        <Grid item md={5} xs='auto'>
+      <Grid container spacing={2} justify="center" item xs={12}>
+
+        <Grid item xs={6}>
           <OverviewProfile/>
         </Grid>
 
@@ -59,9 +60,9 @@ export default () => {
 
       </Grid>
 
-      <Grid container spacing={2} justify="center">
+      <Grid container spacing={5} justify="center" item xs={12}>
 
-        <Grid item md={5} xs='auto'>
+        <Grid item xs='auto'>
           <Grid container spacing={2} justify="center">
             {properties.map(p => (
               <Grid key={p.id} item>
@@ -76,7 +77,9 @@ export default () => {
         </Grid>
 
       </Grid>
-    </div>
+
+    </Grid>
+
   )
 };
 

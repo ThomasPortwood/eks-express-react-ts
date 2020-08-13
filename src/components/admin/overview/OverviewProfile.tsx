@@ -7,11 +7,11 @@ export const OverviewProfile = () => {
   const {user} = useAuth0();
 
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={2}>
       <Grid item xs='auto'>
-        <img src={user.picture} alt="Profile" width={100}/>
+        <img src={user.picture} alt="Profile" width={75}/>
       </Grid>
-      <Grid item xs='auto'>
+      <Grid item xs={8}>
         <Typography variant="h4">{user.name}</Typography>
         <Typography>{user.email}</Typography>
       </Grid>

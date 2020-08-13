@@ -22,13 +22,13 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: theme.spacing(1),
     },
     propertyCard: {
-      minWidth: 400
+      minWidth: 500
     },
     propertyCardTitle: {
       fontSize: 12
     },
     avatar: {
-      backgroundColor: red[500],
+      // backgroundColor: red[500],
     },
   }),
 );

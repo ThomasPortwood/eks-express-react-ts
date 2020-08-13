@@ -13,7 +13,7 @@ const baseTheme = createMuiTheme();
 
 const useStyles = makeStyles((theme: Theme) => ({
   divider: {
-    marginBottom: 15
+    marginBottom: 30
   },
   root: {
     flexGrow: 1,
@@ -37,16 +37,17 @@ const MyLayout = ({children}: any) => {
     <ThemeProvider theme={baseTheme}>
       <div className={classes.root}>
 
-        <Toolbar>
-          <Typography className={classes.title}>Club Abode</Typography>
-          <Button color="inherit" onClick={() => logout({})}>Logout</Button>
-        </Toolbar>
-
         <Grid container justify="center" spacing={2}>
-          <Grid item lg={8}>
 
+          <Grid item xs={8}>
+            <Toolbar>
+              <Typography className={classes.title}>Club Abode</Typography>
+              <Button variant="outlined" color="inherit" onClick={() => logout({})}>Logout</Button>
+            </Toolbar>
+          </Grid>
+
+          <Grid item xs={8}>
             <AppBar color="transparent" position="static" elevation={0}>
-
               <Toolbar>
                 <Tabs value={history.location.pathname} onChange={handleTabChange} className={classes.title}>
                   <Tab label="Overview" value="/"/>
@@ -54,16 +55,14 @@ const MyLayout = ({children}: any) => {
                   <Tab label="Access Control" value="/clubs"/>
                 </Tabs>
               </Toolbar>
-
             </AppBar>
-
           </Grid>
-        </Grid>
 
-        <Divider light={true} className={classes.divider}/>
+          <Grid item xs={8}>
+            <Divider light={true} className={classes.divider}/>
+            {children}
+          </Grid>
 
-        <Grid container spacing={2} justify="center">
-          {children}
         </Grid>
 
         <Notification/>
