@@ -24,15 +24,15 @@ import {createMuiTheme} from "@material-ui/core/styles";
 // https://material-ui.com/customization/typography/
 // https://material-ui.com/customization/breakpoints/
 const myTheme = createMuiTheme();
-// myTheme.typography.h4 = {
-//   fontSize: '1.2rem',
-//   [myTheme.breakpoints.up('md')]: {
-//     fontSize: '1.8rem',
-//   },
-//   [myTheme.breakpoints.up('lg')]: {
-//     fontSize: '2.0rem',
-//   }
-// };
+myTheme.typography.h4 = {
+  fontSize: '1.2rem',
+  [myTheme.breakpoints.up('md')]: {
+    fontSize: '1.8rem',
+  },
+  [myTheme.breakpoints.up('lg')]: {
+    fontSize: '2.0rem',
+  }
+};
 
 export const ReactAdminHal = () => {
 

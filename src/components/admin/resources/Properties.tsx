@@ -27,7 +27,7 @@ export const PropertyList = (props: any) => (
 
 export const PropertyCreate = (props: any) => {
   const { clubId } = parse(props.location.search);
-  const redirect = clubId ? `/clubs/${clubId}/1` : false;
+  const redirect = `/properties`;
   return (
     <Create {...props}>
       <SimpleForm redirect={redirect}>
