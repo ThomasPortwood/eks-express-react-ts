@@ -15,7 +15,7 @@ const mapboxApiAccessToken = process.env.REACT_APP_MAPBOXAPIACCESSTOKEN;
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
-    height: '60vh',
+    height: '40vh',
     display: 'flex',
     flexWrap: 'wrap',
     padding: theme.spacing(1)

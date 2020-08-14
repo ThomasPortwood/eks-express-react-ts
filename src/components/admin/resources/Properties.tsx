@@ -98,7 +98,7 @@ const AddFixtureButton = ({ classes, record }: any) => (
     variant="contained"
     component={Link}
     to={`/fixtures/create?propertyId=${record.id}`}
-    label="Add"
+    label="Add Fixture"
   />
 );
 
@@ -107,6 +107,6 @@ const AddDocumentButton = ({ classes, record }: any) => (
     variant="contained"
     component={Link}
     to={`/documents/create?propertyId=${record.id}`}
-    label="Add"
+    label="Add Document"
   />
 );
