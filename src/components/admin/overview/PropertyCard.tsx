@@ -6,14 +6,13 @@ import {
   CardActions,
   CardContent,
   CardHeader,
-  createStyles, Divider,
+  createStyles,
+  Divider,
   Theme,
   Typography
 } from "@material-ui/core";
 import {Link} from "react-router-dom";
 import {makeStyles} from "@material-ui/core/styles";
-import {red} from "@material-ui/core/colors";
-// import Moment from 'react-moment';
 import moment from 'moment';
 
 const useStyles = makeStyles((theme: Theme) =>

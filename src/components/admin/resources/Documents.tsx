@@ -2,7 +2,7 @@ import React from 'react';
 // https://marmelab.com/react-admin/Tutorial.html
 // https://github.com/marmelab/react-admin/issues/4505
 // @ts-ignore
-import {Create, Edit, FileField, FileInput, Filter, ImageField, ReferenceInput, SelectInput, SimpleForm, TextInput} from 'react-admin';
+import {Create, Edit, FileField, FileInput, ReferenceInput, SelectInput, SimpleForm, TextInput} from 'react-admin';
 import {Typography} from '@material-ui/core';
 import {parse} from "query-string";
 
@@ -44,7 +44,7 @@ export const DocumentEdit = (props: any) => (
       </ReferenceInput>
       <TextInput source="name"/>
       <TextInput source="attributes"/>
-      <FileField source="url" title="name" />
+      <FileField source="url" title="name"/>
       {/*<ImageField source="url"/>*/}
       {/*<ImageInput source="pictures" label="Related pictures" accept="image/*">*/}
       {/*  <ImageField source="src" title="title" />*/}
@@ -52,13 +52,3 @@ export const DocumentEdit = (props: any) => (
     </SimpleForm>
   </Edit>
 );
-
-const DocumentFilter = (props: any) => (
-  <Filter {...props}>
-    <TextInput source="name" alwaysOn/>
-    {/*<ReferenceInput label="Property" source="property.id" reference="Property" allowEmpty>*/}
-    {/*    <SelectInput optionText="name"/>*/}
-    {/*</ReferenceInput>*/}
-  </Filter>
-);
-

@@ -18,7 +18,7 @@ const buildUrl = (resource: string, params: any = {}) => {
 
   if (params.pagination) {
     const {page, perPage} = params.pagination;
-    queryStrings.push(stringify({page: 0, size: perPage}));
+    queryStrings.push(stringify({page: page-1, size: perPage}));
   }
 
   if (params.sort) {

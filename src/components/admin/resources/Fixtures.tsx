@@ -2,7 +2,7 @@ import React from 'react';
 // https://marmelab.com/react-admin/Tutorial.html
 // https://github.com/marmelab/react-admin/issues/4505
 // @ts-ignore
-import {Create, Edit, EditButton, Filter, List, ReferenceField, ReferenceInput, SelectInput, SimpleForm, TextField, TextInput} from 'react-admin';
+import {Create, Edit, ReferenceInput, SelectInput, SimpleForm, TextInput} from 'react-admin';
 import {parse} from "query-string";
 
 const FixtureTitle = ({record}: any) => {
@@ -10,7 +10,7 @@ const FixtureTitle = ({record}: any) => {
 };
 
 export const FixtureCreate = (props: any) => {
-  const { propertyId } = parse(props.location.search);
+  const {propertyId} = parse(props.location.search);
   const redirect = propertyId ? `/properties/${propertyId}/1` : false;
   return (
     <Create {...props}>
@@ -34,13 +34,3 @@ export const FixtureEdit = (props: any) => (
     </SimpleForm>
   </Edit>
 );
-
-const FixtureFilter = (props: any) => (
-  <Filter {...props}>
-    <TextInput source="name" alwaysOn/>
-    {/*<ReferenceInput label="Property" source="property.id" reference="Property" allowEmpty>*/}
-    {/*    <SelectInput optionText="name"/>*/}
-    {/*</ReferenceInput>*/}
-  </Filter>
-);
-

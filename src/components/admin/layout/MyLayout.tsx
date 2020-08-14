@@ -1,17 +1,14 @@
 import * as React from 'react';
 import {useHistory} from 'react-router-dom';
 import PropTypes from 'prop-types';
-//@ts-ignore
 import {makeStyles, Theme, ThemeProvider} from '@material-ui/core/styles';
 //@ts-ignore
-import {Notification,} from 'react-admin';
+import {Notification} from 'react-admin';
 import {Button, Divider, Grid, Tab, Tabs, Toolbar, Typography} from "@material-ui/core";
 import {useAuth0} from "../../../contexts/auth0-context";
+import {useState} from "react";
 
 const useStyles = makeStyles((theme: Theme) => ({
-  divider: {
-    marginBottom: 30
-  },
   root: {
     flexGrow: 1,
   },
@@ -20,14 +17,23 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
+const tabs = [
+  {index: 0, label: "Overview", key: "/"},
+  {index: 1, label: "Properties", key: "/properties"},
+  {index: 2, label: "People", key: "/members"},
+  {index: 3, label: "Organizations", key: "/organizations"}
+]
+
 const MyLayout = ({children, theme}: any) => {
 
   const history = useHistory();
   const classes = useStyles();
   const {logout} = useAuth0();
+  const [value, setValue] = useState(0);
 
-  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) => {
-    history.push(newValue);
+  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+    setValue(newValue);
+    history.push(tabs[newValue].key);
   };
 
   return (
@@ -46,13 +52,9 @@ const MyLayout = ({children, theme}: any) => {
           <Grid item xs={10}>
             <Tabs
               centered
-              value={history.location.pathname}
-              onChange={handleTabChange}
-              className={classes.title}>
-              <Tab label="Overview" value="/"/>
-              <Tab label="Properties" value="/properties"/>
-              <Tab label="People" value="/members"/>
-              <Tab label="Organizations" value="/organizations"/>
+              value={value}
+              onChange={handleTabChange}>
+              {tabs.map(t => (<Tab {...t}/>))}
             </Tabs>
             <Divider light={true}/>
           </Grid>

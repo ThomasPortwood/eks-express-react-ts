@@ -2,11 +2,10 @@ import React from 'react';
 // https://marmelab.com/react-admin/Tutorial.html
 // https://github.com/marmelab/react-admin/issues/4505
 // @ts-ignore
-import {AutocompleteInput, Button, Create, Datagrid, DeleteButton, Edit, EditButton, Filter, List, ReferenceField, ReferenceInput, ReferenceManyField, SelectInput, SimpleForm, TabbedForm, FormTab, TextField, TextInput} from 'react-admin';
+import {AutocompleteInput, Button, Create, Datagrid, DeleteButton, Edit, EditButton, Filter, List, ReferenceField, ReferenceInput, ReferenceManyField, SimpleForm, TabbedForm, FormTab, TextField, TextInput} from 'react-admin';
 
 import MyMapbox from "../MyMapbox";
 import {Link} from "react-router-dom";
-import {parse} from "query-string";
 
 const PropertyTitle = ({record}: any) => {
   return <span>Property {record ? `"${record.name}"` : ''}</span>;
@@ -25,12 +24,10 @@ export const PropertyList = (props: any) => (
 );
 
 export const PropertyCreate = (props: any) => {
-  const { clubId } = parse(props.location.search);
   const redirect = `/properties`;
   return (
     <Create {...props}>
       <SimpleForm redirect={redirect}>
-        {/*<TextInput source="clubId" initialValue={clubId} disabled/>*/}
         <TextInput source="name"/>
         <TextInput source="address"/>
         <TextInput source="attributes" initialValue="{}"/>
