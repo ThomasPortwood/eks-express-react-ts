@@ -24,7 +24,7 @@ const tabs = [
   {index: 3, label: "Organizations", key: "/organizations"}
 ]
 
-const MyLayout = ({children, theme}: any) => {
+const MyLayout = ({children, theme, title}: any) => {
 
   const history = useHistory();
   const classes = useStyles();
@@ -42,9 +42,9 @@ const MyLayout = ({children, theme}: any) => {
 
         <Grid container justify="center" spacing={2}>
 
-          <Grid item xs={10}>
+          <Grid item md={10} xs={12}>
             <Toolbar>
-              <Typography className={classes.title}>Club Abode</Typography>
+              <Typography className={classes.title}>{title}</Typography>
               <Button variant="outlined" color="inherit" onClick={() => logout({})}>Logout</Button>
             </Toolbar>
           </Grid>
@@ -73,7 +73,8 @@ const MyLayout = ({children, theme}: any) => {
 
 MyLayout.propTypes = {
   children: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
-  theme: PropTypes.object
+  theme: PropTypes.object,
+  title: PropTypes.string
 };
 
 export default MyLayout;

@@ -4,12 +4,8 @@ import React from 'react';
 // @ts-ignore
 import {AutocompleteInput, Button, Create, Datagrid, DeleteButton, Edit, EditButton, Filter, List, ReferenceField, ReferenceInput, ReferenceManyField, SimpleForm, TabbedForm, FormTab, TextField, TextInput} from 'react-admin';
 
-import MyMapbox from "../MyMapbox";
+import MyMapbox from "../map/MyMapbox";
 import {Link} from "react-router-dom";
-
-const PropertyTitle = ({record}: any) => {
-  return <span>Property {record ? `"${record.name}"` : ''}</span>;
-};
 
 export const PropertyList = (props: any) => (
   <List filters={<PropertyFilter/>} {...props}>
@@ -38,14 +34,16 @@ export const PropertyCreate = (props: any) => {
 
 export const PropertyEdit = (props: any) => {
   return (
-    <Edit title={<PropertyTitle/>} {...props}>
+    <Edit {...props}>
       <TabbedForm redirect={false}>
         <FormTab label="Address">
-          <TextInput source="address"/>
+          <TextInput source="address" fullWidth/>
           <MyMapbox record={props.record}/>
         </FormTab>
         <FormTab label="Fixtures">
-          <ReferenceManyField reference="fixtures" target={`${props.basePath}/${props.id}/fixtures`} >
+          <ReferenceManyField
+            reference="fixtures"
+            target={`${props.basePath}/${props.id}/fixtures`}>
             <Datagrid rowClick="edit">
               <TextField source="name"/>
               <EditButton/>
@@ -55,7 +53,9 @@ export const PropertyEdit = (props: any) => {
           <AddFixtureButton/>
         </FormTab>
         <FormTab label="Documents">
-          <ReferenceManyField reference="documents" target={`${props.basePath}/${props.id}/documents`} >
+          <ReferenceManyField
+            reference="documents"
+            target={`${props.basePath}/${props.id}/documents`} >
             <Datagrid rowClick="edit">
               <TextField source="name"/>
               <EditButton/>
@@ -90,9 +90,6 @@ export const PropertyEdit = (props: any) => {
 const PropertyFilter = (props: any) => (
   <Filter {...props}>
     <TextInput source="name" alwaysOn/>
-    {/*<ReferenceInput label="Property" source="property.id" reference="Property" allowEmpty>*/}
-    {/*    <SelectInput optionText="name"/>*/}
-    {/*</ReferenceInput>*/}
   </Filter>
 );
 

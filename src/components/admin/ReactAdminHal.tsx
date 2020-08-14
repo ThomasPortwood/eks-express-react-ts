@@ -2,7 +2,6 @@
 import React, {useEffect, useState} from 'react';
 // https://auth0.com/docs/quickstart/spa/react
 import {useAuth0} from "../../contexts/auth0-context";
-// https://www.apollographql.com/docs/react/get-started/
 // https://marmelab.com/react-admin/Tutorial.html
 // https://github.com/marmelab/react-admin/issues/4505
 // @ts-ignore
@@ -25,9 +24,9 @@ import {createMuiTheme} from "@material-ui/core/styles";
 // https://material-ui.com/customization/breakpoints/
 const myTheme = createMuiTheme();
 myTheme.typography.h4 = {
-  fontSize: '1.2rem',
+  fontSize: '1.0rem',
   [myTheme.breakpoints.up('md')]: {
-    fontSize: '1.8rem',
+    fontSize: '1.5rem',
   },
   [myTheme.breakpoints.up('lg')]: {
     fontSize: '2.0rem',
@@ -95,6 +94,7 @@ export const ReactAdminHal = () => {
           dataProvider={reactAdminDataProvider}
           layout={MyLayout}
           theme={myTheme}
+          title="Club Abode"
         >
           <Resource name="clubs" list={ClubList} create={ClubCreate} edit={ClubEdit}/>
           <Resource name="clubMembers" create={ClubMemberCreate}/>

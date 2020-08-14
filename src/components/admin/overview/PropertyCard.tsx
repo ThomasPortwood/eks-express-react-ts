@@ -21,13 +21,10 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: theme.spacing(1),
     },
     propertyCard: {
-      minWidth: 500
+      minWidth: 300
     },
     propertyCardTitle: {
       fontSize: 12
-    },
-    avatar: {
-      // backgroundColor: red[500],
     },
   }),
 );
@@ -42,7 +39,7 @@ export const PropertyCard = ({property}: any) => {
     <Card elevation={5} className={classes.propertyCard}>
       <CardHeader
         avatar={
-          <Avatar className={classes.avatar}>
+          <Avatar>
             {property.name[0]}
           </Avatar>
         }
