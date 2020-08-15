@@ -4,7 +4,6 @@ import React, {cloneElement} from 'react';
 // @ts-ignore
 import {AutocompleteInput, Button, Create, Datagrid, DeleteButton, Edit, EditButton, ExportButton, Filter, List, ReferenceField, ReferenceInput, ReferenceManyField, SimpleForm, TabbedForm, FormTab, sanitizeListRestProps, TextField, TextInput, TopToolbar, useListContext} from 'react-admin';
 
-import MyMapbox from "../map/MyMapbox";
 import {Link, useHistory} from "react-router-dom";
 import IconAdd from "@material-ui/icons/Add";
 
@@ -84,10 +83,6 @@ export const PropertyEdit = (props: any) => {
   return (
     <Edit {...props}>
       <TabbedForm redirect={false}>
-        <FormTab label="Address">
-          <TextInput source="address" fullWidth/>
-          <MyMapbox record={props.record}/>
-        </FormTab>
         <FormTab label="Fixtures">
           <ReferenceManyField
             reference="fixtures"
@@ -113,6 +108,7 @@ export const PropertyEdit = (props: any) => {
           <AddDocumentButton/>
         </FormTab>
         <FormTab label="Settings">
+          <TextInput source="address" fullWidth/>
           <ReferenceInput
             label="Owner"
             source="ownerId"

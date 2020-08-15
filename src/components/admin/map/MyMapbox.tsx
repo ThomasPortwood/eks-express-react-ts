@@ -8,7 +8,8 @@ import {makeStyles} from '@material-ui/core/styles';
 // @ts-ignore
 import DeckGL from '@deck.gl/react';
 // @ts-ignore
-import {ScatterplotLayer} from '@deck.gl/layers';
+import {Error, Loading, useQueryWithStore} from 'react-admin';
+import {createScatterPlotLayer, getAverageCoordinates} from "../../../util/MapUtil";
 
 const mapboxApiAccessToken = process.env.REACT_APP_MAPBOXAPIACCESSTOKEN;
 
@@ -39,20 +40,23 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-interface input {
+interface MyMapboxInput {
+  records: any[]
   record: any
 }
 
-export default function MyMapbox(props: input) {
+export default function MyMapbox() {
 
   const classes = useStyles();
+  const [properties, setProperties] = useState([]);
+  const [layers, setLayers] = useState([]);
 
   // https://uber.github.io/react-map-gl/#/Documentation/getting-started/get-started
   const [viewport, setViewport] = useState({
     width: "100%",
     height: "100%",
-    latitude: props.record.location.latitude,
-    longitude: props.record.location.longitude,
+    latitude: 0,
+    longitude: 0,
     zoom: 10,
     bearing: 0,
     pitch: 0,
@@ -61,25 +65,24 @@ export default function MyMapbox(props: input) {
     zIndex: -1
   });
 
-  const layers: any = [];
+  // https://marmelab.com/react-admin/Actions.html
+  const {loaded, error} = useQueryWithStore(
+    {
+      type: 'getList',
+      resource: 'properties',
+    },
+    {
+      onSuccess: ({data}: any) => {
+        const {longitude, latitude} = getAverageCoordinates(data);
+        const layers = createScatterPlotLayer(data);
+        setViewport({...viewport, longitude, latitude});
+        setLayers(layers);
+      }
+    }
+  );
 
-  if (props.record) {
-    layers.push(
-      new ScatterplotLayer({
-        data: [props.record],
-        getFillColor: [255, 140, 0],
-        getPosition: (d: any) => [d.location.longitude, d.location.latitude],
-        id: 'scatterplot-layer',
-        filled: true,
-        opacity: 1.0,
-        radiusScale: 6,
-        radiusMinPixels: 10,
-        radiusMaxPixels: 100,
-        lineWidthMinPixels: 1,
-        stroked: true
-      })
-    )
-  }
+  if (!loaded) { return <Loading />; }
+  if (error) { return <Error />; }
 
   return (
     <div className={classes.root}>
@@ -92,7 +95,7 @@ export default function MyMapbox(props: input) {
           width: viewport.width === 0 ? "100%" : viewport.width,
           height: viewport.height === 0 ? "100%" : viewport.height,
         })}>
-        <DeckGL viewState={viewport} layers={layers} />
+        <DeckGL viewState={viewport} layers={layers}/>
       </ReactMapGL>
     </div>
   );

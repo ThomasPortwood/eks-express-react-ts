@@ -11,7 +11,7 @@ const buildUrl = (resource: string, params: any = {}) => {
 
   let queryStrings = [];
 
-  if (params.filter.name) {
+  if (params.filter && params.filter.name) {
     url += `/search/findByNameContains`;
     queryStrings.push(stringify({input: params.filter.name}));
   }

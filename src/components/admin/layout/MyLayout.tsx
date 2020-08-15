@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {makeStyles, Theme, ThemeProvider} from '@material-ui/core/styles';
@@ -6,22 +7,29 @@ import {makeStyles, Theme, ThemeProvider} from '@material-ui/core/styles';
 import {Notification} from 'react-admin';
 import {Button, Divider, Grid, Tab, Tabs, Toolbar, Typography} from "@material-ui/core";
 import {useAuth0} from "../../../contexts/auth0-context";
-import {useState} from "react";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     flexGrow: 1,
   },
+  bar: {
+    color: 'transparent'
+  },
   title: {
     flexGrow: 1,
   },
+  tab: {
+    minWidth: '10%',
+    textTransform: 'none'
+  }
 }));
 
 const tabs = [
   {index: 0, label: "Overview", key: "/"},
-  {index: 1, label: "Properties", key: "/properties"},
-  {index: 2, label: "People", key: "/members"},
-  {index: 3, label: "Organizations", key: "/organizations"}
+  {index: 1, label: "Map", key: "/map"},
+  {index: 2, label: "Properties", key: "/properties"},
+  {index: 3, label: "People", key: "/members"},
+  {index: 4, label: "Organizations", key: "/organizations"}
 ]
 
 const MyLayout = ({children, theme, title}: any) => {
@@ -52,9 +60,10 @@ const MyLayout = ({children, theme, title}: any) => {
           <Grid item xs={10}>
             <Tabs
               centered
+              variant="fullWidth"
               value={value}
               onChange={handleTabChange}>
-              {tabs.map(t => (<Tab {...t}/>))}
+              {tabs.map(t => (<Tab className={classes.tab} {...t}/>))}
             </Tabs>
             <Divider light={true}/>
           </Grid>

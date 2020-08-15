@@ -1,5 +1,6 @@
 // https://reactjs.org/docs/hooks-intro.html
 import React, {useEffect, useState} from 'react';
+import { Route } from 'react-router-dom';
 // https://auth0.com/docs/quickstart/spa/react
 import {useAuth0} from "../../contexts/auth0-context";
 // https://marmelab.com/react-admin/Tutorial.html
@@ -19,6 +20,7 @@ import MyLayout from "./layout/MyLayout";
 import {OrganizationCreate, OrganizationEdit, OrganizationList} from "./resources/Organizations";
 import {OrganizationMemberCreate} from "./resources/OrganizationMembers";
 import {createMuiTheme} from "@material-ui/core/styles";
+import MyMapbox from "./map/MyMapbox";
 
 // https://material-ui.com/customization/typography/
 // https://material-ui.com/customization/breakpoints/
@@ -95,6 +97,9 @@ export const ReactAdminHal = () => {
           layout={MyLayout}
           theme={myTheme}
           title="Club Abode"
+          customRoutes={[
+            <Route key="map" path="/map" component={MyMapbox}/>
+          ]}
         >
           <Resource name="clubs" list={ClubList} create={ClubCreate} edit={ClubEdit}/>
           <Resource name="clubMembers" create={ClubMemberCreate}/>
