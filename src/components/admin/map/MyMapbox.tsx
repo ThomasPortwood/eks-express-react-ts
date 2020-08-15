@@ -9,7 +9,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import DeckGL from '@deck.gl/react';
 // @ts-ignore
 import {Error, Loading, useQueryWithStore} from 'react-admin';
-import {createScatterPlotLayer, getAverageCoordinates} from "../../../util/MapUtil";
+import {createScatterPlotLayer, getCenterCoordinates} from "../../../util/MapUtil";
 
 const mapboxApiAccessToken = process.env.REACT_APP_MAPBOXAPIACCESSTOKEN;
 
@@ -56,7 +56,7 @@ export default function MyMapbox() {
     height: "100%",
     latitude: 0,
     longitude: 0,
-    zoom: 10,
+    zoom: 3,
     bearing: 0,
     pitch: 0,
     maxZoom: 15,
@@ -72,7 +72,7 @@ export default function MyMapbox() {
     },
     {
       onSuccess: ({data}: any) => {
-        const {longitude, latitude} = getAverageCoordinates(data);
+        const {longitude, latitude} = getCenterCoordinates(data);
         const layers = createScatterPlotLayer(data);
         setViewport({...viewport, longitude, latitude});
         setLayers(layers);

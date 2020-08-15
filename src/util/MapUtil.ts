@@ -1,22 +1,30 @@
 //@ts-ignore
 import {ScatterplotLayer} from '@deck.gl/layers';
 
-function longitude(record: any) {
-  return record.location.longitude;
+function location(record: any) {
+  return record.location;
 }
 
-function latitude(item: any) {
-  return item.location.latitude;
-}
-
-function sum(prev: number, next: number) {
-  return prev + next;
-}
-
-export function getAverageCoordinates(records: any[]) {
+function maxCoordinate(prev: any, next: any) {
   return {
-    longitude: records.map(longitude).reduce(sum) / records.length,
-    latitude: records.map(latitude).reduce(sum) / records.length
+    longitude: Math.max(prev.longitude, next.longitude),
+    latitude: Math.max(prev.latitude, next.latitude)
+  }
+}
+
+function minCoordinate(prev: any, next: any) {
+  return {
+    longitude: Math.min(prev.longitude, next.longitude),
+    latitude: Math.min(prev.latitude, next.latitude)
+  }
+}
+
+export function getCenterCoordinates(records: any[]) {
+  const max = records.map(location).reduce(maxCoordinate);
+  const min = records.map(location).reduce(minCoordinate);
+  return {
+    longitude: (max.longitude + min.longitude) / 2,
+    latitude: (max.latitude + min.latitude) / 2
   }
 }
 
