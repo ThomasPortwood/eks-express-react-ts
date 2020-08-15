@@ -48,7 +48,6 @@ interface MyMapboxInput {
 export default function MyMapbox() {
 
   const classes = useStyles();
-  const [properties, setProperties] = useState([]);
   const [layers, setLayers] = useState([]);
 
   // https://uber.github.io/react-map-gl/#/Documentation/getting-started/get-started

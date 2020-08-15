@@ -1,33 +1,32 @@
 import * as React from "react";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {useHistory} from 'react-router-dom';
 import {Button, Grid} from '@material-ui/core';
 //@ts-ignore
-import {Error, useDataProvider} from 'react-admin';
+import {Error, Loading, useQueryWithStore} from 'react-admin';
 import {OverviewProfile} from "./OverviewProfile";
 import {PropertyCard} from "./PropertyCard";
 
 export default () => {
 
-  const dataProvider = useDataProvider();
   const history = useHistory();
   const [properties, setProperties] = useState<any []>([]);
-  const [error, setError] = useState();
 
-  useEffect(() => {
-
-    dataProvider.getList('properties', {filter: {}, sort: {field: "updatedAt", order: "desc"}})
-      .then(({data}: any) => {
+  const {loaded, error} = useQueryWithStore(
+    {
+      type: 'getList',
+      resource: 'properties',
+      payload: {filter: {}, sort: {field: "updatedAt", order: "desc"}}
+    },
+    {
+      onSuccess: ({data}: any) => {
         setProperties(data);
-      })
-      .catch((error: any) => {
-        setError(error);
-      });
+      }
+    }
+  );
 
-  }, [dataProvider]);
-
-  if (error) return <Error/>;
-  if (!properties) return null;
+  if (!loaded) { return <Loading />; }
+  if (error) { return <Error />; }
 
   return (
 
