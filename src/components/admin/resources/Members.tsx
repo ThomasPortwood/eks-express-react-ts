@@ -1,33 +1,34 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 // https://marmelab.com/react-admin/Tutorial.html
 // https://github.com/marmelab/react-admin/issues/4505
 // @ts-ignore
-import {Button, DateField, Datagrid, Filter, List, SimpleList, TextField, TextInput} from 'react-admin';
-import {Link} from "react-router-dom";
+import {DateField, Datagrid, Filter, List, SimpleList, TextField, TextInput} from 'react-admin';
 import {Theme, useMediaQuery} from "@material-ui/core";
 
-const SomethingButton = ({classes, record}: any) => (
-  <Button
-    component={Link}
-    to={`/members`}
-    label="Add to club"
-  />
-);
+// const SomethingButton = ({classes, record}: any) => (
+//   <Button
+//     component={Link}
+//     to={`/members`}
+//     label="Add to club"
+//   />
+// );
 
-const PostBulkActionButtons = (props: any) => (
-  <Fragment>
-    {/*<SomethingButton label="Something" {...props} />*/}
-    {/* default bulk delete action */}
-    {/*<BulkDeleteButton {...props} />*/}
-  </Fragment>
-);
+// const PostBulkActionButtons = (props: any) => (
+//   <Fragment>
+//     {/*<SomethingButton label="Something" {...props} />*/}
+//     {/* default bulk delete action */}
+//     {/*<BulkDeleteButton {...props} />*/}
+//   </Fragment>
+// );
+
+// bulkActionButtons={<PostBulkActionButtons/>}
 
 export const MemberList = (props: any) => {
 
   const isSmall = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'));
 
   return (
-    <List {...props} filters={<MemberFilter/>} bulkActionButtons={<PostBulkActionButtons/>}>
+    <List {...props} filters={<MemberFilter/>} >
       {isSmall ? (
         <SimpleList
           primaryText={(record: any) => record.name}
